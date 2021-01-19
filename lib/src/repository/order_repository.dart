@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:global_configuration/global_configuration.dart';
 import 'package:http/http.dart' as http;
+import 'package:markets/src/models/voucher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/custom_trace.dart';
@@ -37,6 +38,31 @@ Future<Stream<Order>> getOrders() async {
   } catch (e) {
     print(CustomTrace(StackTrace.current, message: url).toString());
     return new Stream.value(new Order.fromJSON({}));
+  }
+}
+
+Future<Stream<Voucher>> getMyVouchers() async {
+  User _user = userRepo.currentUser.value;
+  if (_user.apiToken == null) {
+    return new Stream.value(null);
+  }
+  final String _apiToken = 'api_token=${_user.apiToken}&';
+  final String url =
+      '${GlobalConfiguration().getString('api_base_url')}my_vouchers?${_apiToken}';
+  try {
+    final client = new http.Client();
+    final streamedRest = await client.send(http.Request('get', Uri.parse(url)));
+    return streamedRest.stream
+        .transform(utf8.decoder)
+        .transform(json.decoder)
+        .map((data) => Helper.getData(data))
+        .expand((data) => (data as List))
+        .map((data) {
+      return Voucher.fromJSON(data);
+    });
+  } catch (e) {
+    print(CustomTrace(StackTrace.current, message: url).toString());
+    return new Stream.value(new Voucher.fromJSON({}));
   }
 }
 
