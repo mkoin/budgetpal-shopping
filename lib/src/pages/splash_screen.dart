@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:markets/src/repository/user_repository.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../controllers/splash_screen_controller.dart';
@@ -31,7 +32,11 @@ class SplashScreenState extends StateMVC<SplashScreen> {
       });
       if (progress == 100) {
         try {
-          Navigator.of(context).pushReplacementNamed('/Pages', arguments: 2);
+          if (currentUser.value.apiToken == null) {
+            Navigator.of(context).pushReplacementNamed("/Login");
+          } else {
+            Navigator.of(context).pushReplacementNamed('/Pages', arguments: 2);
+          }
         } catch (e) {}
       }
     });
@@ -58,7 +63,8 @@ class SplashScreenState extends StateMVC<SplashScreen> {
               ),
               SizedBox(height: 50),
               CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).hintColor),
+                valueColor:
+                    AlwaysStoppedAnimation<Color>(Theme.of(context).hintColor),
               ),
             ],
           ),
