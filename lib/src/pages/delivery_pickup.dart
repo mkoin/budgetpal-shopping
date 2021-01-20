@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../generated/l10n.dart';
 import '../controllers/delivery_pickup_controller.dart';
@@ -14,6 +17,8 @@ import '../models/address.dart';
 import '../models/payment_method.dart';
 import '../models/route_argument.dart';
 
+enum SingingCharacter { ASAP, SCHEDULED }
+
 class DeliveryPickupWidget extends StatefulWidget {
   final RouteArgument routeArgument;
 
@@ -25,9 +30,22 @@ class DeliveryPickupWidget extends StatefulWidget {
 
 class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
   DeliveryPickupController _con;
+  var userAddress = 'info';
+  SingingCharacter _character = SingingCharacter.ASAP;
 
   _DeliveryPickupWidgetState() : super(DeliveryPickupController()) {
     _con = controller;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _locationScreenToShow();
+  }
+
+  Future<void> _locationScreenToShow() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userAddress = prefs.getString('locationName');
   }
 
   @override
@@ -46,10 +64,15 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
         centerTitle: true,
         title: Text(
           S.of(context).delivery_or_pickup,
-          style: Theme.of(context).textTheme.headline6.merge(TextStyle(letterSpacing: 1.3)),
+          style: Theme.of(context)
+              .textTheme
+              .headline6
+              .merge(TextStyle(letterSpacing: 1.3)),
         ),
         actions: <Widget>[
-          new ShoppingCartButtonWidget(iconColor: Theme.of(context).hintColor, labelColor: Theme.of(context).accentColor),
+          new ShoppingCartButtonWidget(
+              iconColor: Theme.of(context).hintColor,
+              labelColor: Theme.of(context).accentColor),
         ],
       ),
       body: SingleChildScrollView(
@@ -59,37 +82,38 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 10),
-              child: ListTile(
-                contentPadding: EdgeInsets.symmetric(vertical: 0),
-                leading: Icon(
-                  Icons.domain,
-                  color: Theme.of(context).hintColor,
-                ),
-                title: Text(
-                  S.of(context).pickup,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-                subtitle: Text(
-                  S.of(context).pickup_your_product_from_the_market,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.caption,
-                ),
-              ),
-            ),
-            PickUpMethodItem(
-                paymentMethod: _con.getPickUpMethod(),
-                onPressed: (paymentMethod) {
-                  _con.togglePickUp();
-                }),
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 20, right: 10),
+            //   child: ListTile(
+            //     contentPadding: EdgeInsets.symmetric(vertical: 0),
+            //     leading: Icon(
+            //       Icons.domain,
+            //       color: Theme.of(context).hintColor,
+            //     ),
+            //     title: Text(
+            //       S.of(context).pickup,
+            //       maxLines: 1,
+            //       overflow: TextOverflow.ellipsis,
+            //       style: Theme.of(context).textTheme.headline4,
+            //     ),
+            //     subtitle: Text(
+            //       S.of(context).pickup_your_product_from_the_market,
+            //       maxLines: 1,
+            //       overflow: TextOverflow.ellipsis,
+            //       style: Theme.of(context).textTheme.caption,
+            //     ),
+            //   ),
+            // ),
+            // PickUpMethodItem(
+            //     paymentMethod: _con.getPickUpMethod(),
+            //     onPressed: (paymentMethod) {
+            //       _con.togglePickUp();
+            //     }),
             Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(top: 20, bottom: 10, left: 20, right: 10),
+                  padding: const EdgeInsets.only(
+                      top: 20, bottom: 10, left: 20, right: 10),
                   child: ListTile(
                     contentPadding: EdgeInsets.symmetric(vertical: 0),
                     leading: Icon(
@@ -102,9 +126,13 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.headline4,
                     ),
-                    subtitle: _con.carts.isNotEmpty && Helper.canDelivery(_con.carts[0].product.market, carts: _con.carts)
+                    subtitle: _con.carts.isNotEmpty &&
+                            Helper.canDelivery(_con.carts[0].product.market,
+                                carts: _con.carts)
                         ? Text(
-                            S.of(context).click_to_confirm_your_address_and_pay_or_long_press,
+                            S
+                                .of(context)
+                                .click_to_confirm_your_address_and_pay_or_long_press,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context).textTheme.caption,
@@ -117,12 +145,15 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
                           ),
                   ),
                 ),
-                _con.carts.isNotEmpty && Helper.canDelivery(_con.carts[0].product.market, carts: _con.carts)
+                _con.carts.isNotEmpty &&
+                        Helper.canDelivery(_con.carts[0].product.market,
+                            carts: _con.carts)
                     ? DeliveryAddressesItemWidget(
                         paymentMethod: _con.getDeliveryMethod(),
                         address: _con.deliveryAddress,
                         onPressed: (Address _address) {
-                          if (_con.deliveryAddress.id == null || _con.deliveryAddress.id == 'null') {
+                          if (_con.deliveryAddress.id == null ||
+                              _con.deliveryAddress.id == 'null') {
                             DeliveryAddressDialog(
                               context: context,
                               address: _address,
@@ -144,7 +175,133 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
                           );
                         },
                       )
-                    : NotDeliverableAddressesItemWidget()
+                    : NotDeliverableAddressesItemWidget(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.symmetric(vertical: 0),
+                    leading: Icon(
+                      Icons.map,
+                      color: Theme.of(context).hintColor,
+                    ),
+                    title: Text(
+                      "Extra Delivery Information",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                    subtitle: Text(
+                      userAddress,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 8, 8, 0),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.symmetric(vertical: 0),
+                    leading: Icon(
+                      Icons.delivery_dining,
+                      color: Theme.of(context).hintColor,
+                    ),
+                    title: Text(
+                      "Delivery Time",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                  ),
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: RadioListTile<SingingCharacter>(
+                        title: Text('ASAP', style: TextStyle(fontSize: 12)),
+                        value: SingingCharacter.ASAP,
+                        groupValue: _character,
+                        onChanged: (SingingCharacter value) {
+                          setState(() {
+                            _character = value;
+                          });
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: RadioListTile<SingingCharacter>(
+                        title:
+                            Text('SCHEDULE', style: TextStyle(fontSize: 12)),
+                        value: SingingCharacter.SCHEDULED,
+                        groupValue: _character,
+                        onChanged: (SingingCharacter value) {
+                          showDialog(
+                            context: context,
+                            builder: (_) => new AlertDialog(
+                              title: Column(
+                                children: [
+                                  new Text("Schedule Delivery"),
+                                  Divider(
+                                    color: Colors.blue,
+                                  ),
+                                ],
+                              ),
+                              content: Container(
+                                // color: Colors.blue,
+                                height: 170,
+                                child: ListView.builder(
+                                  itemCount: 3,
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                      onTap: (){
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Card(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "${(index + 1)}. Tomorrow",
+                                                style: TextStyle(
+                                                    // color: Colors.blue,
+                                                    fontSize: 16),
+                                                textAlign: TextAlign.start,
+                                              ),
+                                              Text(
+                                                " 10:00am-11:00am",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .caption,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text('Close'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                          setState(() {
+                            _character = value;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ],
             )
           ],

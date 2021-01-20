@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:markets/src/models/voucher.dart';
 import 'package:markets/src/repository/order_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../generated/l10n.dart';
 import '../elements/PaymentMethodListItemWidget.dart';
@@ -22,7 +24,13 @@ class PaymentMethodsWidget extends StatefulWidget {
 
 class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
   PaymentMethodList list;
-
+  var _subTotal = 0.0;
+  var _chosenVoucher;
+  var _chosenCashPayment;
+  var _chosenEnabledPayment;
+  var theChoseRoute;
+  bool _setVoucherPaymentSuccessVisible = false;
+  bool _submitPurchase = false;
   List<Voucher> voucher = <Voucher>[];
 
   @override
@@ -32,6 +40,8 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
   }
 
   void listenForOrders() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _subTotal = prefs.getDouble("SubTotal");
     final Stream<Voucher> stream = await getMyVouchers();
     stream.listen((Voucher _voucher) {
       setState(() {
@@ -86,10 +96,16 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
             //   padding: const EdgeInsets.symmetric(horizontal: 20),
             //   child: SearchBarWidget(),
             // ),
+            Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Text(
+                  S.of(context).select_your_preferred_payment_mode,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )),
             voucher.length > 0
                 ? Padding(
                     padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 5),
-                    child: Text("Choose a voucher"),
+                    child: Text("\nBy my vouchers"),
                   )
                 : SizedBox(
                     height: 0,
@@ -107,10 +123,45 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
                     focusColor: Theme.of(context).accentColor,
                     highlightColor: Theme.of(context).primaryColor,
                     onTap: () {
+                      if (_subTotal > int.parse(voucher[index].amount)) {
+                        showDialog(
+                            context: context,
+                            builder: (_) => new CupertinoAlertDialog(
+                                  title: new Text("Funds Insufficient"),
+                                  content: new Text(
+                                      "\nVoucher Insufficient for this Shopping"),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      child: Text('Ok'),
+                                      onPressed: () {
+                                        setState(() {
+                                          _setVoucherPaymentSuccessVisible =
+                                              false;
+                                          _chosenCashPayment = '';
+                                        });
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                ));
+                      } else {
+                        setState(() {
+                          _submitPurchase = true;
+                          _chosenCashPayment = '';
+                          theChoseRoute = '/vouchers';
+                          _setVoucherPaymentSuccessVisible = true;
+                        });
+                      }
+                      setState(() {
+                        _chosenVoucher = index;
+                        _chosenCashPayment = '';
+                      });
                       // Navigator.of(context).pushNamed(this.paymentMethod.route);
                       // print(this.paymentMethod.name);
                     },
                     child: Card(
+                      color:
+                          _chosenVoucher == index ? Colors.cyan : Colors.white,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -154,6 +205,26 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
                 },
               ),
             ),
+            _setVoucherPaymentSuccessVisible
+                ? Container(
+                    color: Colors.red.withOpacity(0.1),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.check,
+                            color: Colors.green,
+                          ),
+                          Text(
+                            "Proceed to Make a Payment Of Ksh.$_subTotal",
+                            style: TextStyle(color: Colors.green),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                : SizedBox(),
             // SizedBox(height: 10),
             // list.paymentsList.length > 0
             //     ? Padding(
@@ -216,7 +287,7 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
             //       ),
             Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Text(S.of(context).select_your_preferred_payment_mode)),
+                child: Text("\nBy Payment Gateway")),
             ListView.separated(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
@@ -226,8 +297,81 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
                 return SizedBox(height: 10);
               },
               itemBuilder: (context, index) {
-                return PaymentMethodListItemWidget(
-                    paymentMethod: list.cashList.elementAt(index));
+                return InkWell(
+                  onTap: () {
+                    setState(() {
+                      _chosenCashPayment = index;
+                      theChoseRoute = list.cashList[index].route;
+                      _setVoucherPaymentSuccessVisible = false;
+                      _chosenVoucher = '';
+                      _submitPurchase = true;
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: _chosenCashPayment == index
+                          ? Colors.red.withOpacity(0.1)
+                          : Theme.of(context).primaryColor.withOpacity(0.9),
+                      boxShadow: [
+                        BoxShadow(
+                            color:
+                                Theme.of(context).focusColor.withOpacity(0.1),
+                            blurRadius: 5,
+                            offset: Offset(0, 2)),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            image: DecorationImage(
+                                image: AssetImage(list.cashList[index].logo),
+                                fit: BoxFit.fill),
+                          ),
+                        ),
+                        SizedBox(width: 15),
+                        Flexible(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      list.cashList[index].name,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      style:
+                                          Theme.of(context).textTheme.subtitle1,
+                                    ),
+                                    Text(
+                                      list.cashList[index].description,
+                                      overflow: TextOverflow.fade,
+                                      softWrap: false,
+                                      style:
+                                          Theme.of(context).textTheme.caption,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(width: 8),
+                              Icon(
+                                Icons.keyboard_arrow_right,
+                                color: Theme.of(context).focusColor,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
               },
             ),
             SizedBox(height: 10),
@@ -244,6 +388,36 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
                     paymentMethod: list.paymentsList.elementAt(index));
               },
             ),
+            _submitPurchase
+                ? InkWell(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(theChoseRoute);
+                      print(theChoseRoute);
+                    },
+                    child: Container(
+                      height: 50,
+                      decoration: new BoxDecoration(
+                        color: Colors.green,
+                        border: Border.all(color: Colors.white, width: 0.0),
+                        borderRadius:
+                            new BorderRadius.all(Radius.elliptical(50, 50)),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Proceed",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Icon(
+                            Icons.navigate_next,
+                            color: Colors.white,
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                : SizedBox(),
           ],
         ),
       ),

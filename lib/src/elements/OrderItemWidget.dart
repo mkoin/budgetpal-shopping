@@ -50,6 +50,10 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                           DateFormat('dd-MM-yyyy | HH:mm').format(widget.order.dateTime),
                           style: Theme.of(context).textTheme.caption,
                         ),
+                        Text(
+                          widget.order.active ? 'Order Status: ${widget.order.orderStatus.status}' : 'Order Status: ${S.of(context).canceled}',
+                          style: Theme.of(context).textTheme.caption,
+                        ),
                       ],
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -189,22 +193,22 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
             ],
           ),
         ),
-        Container(
-          margin: EdgeInsetsDirectional.only(start: 20),
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          height: 28,
-          width: 140,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(100)), color: widget.order.active ? Theme.of(context).accentColor : Colors.redAccent),
-          alignment: AlignmentDirectional.center,
-          child: Text(
-            widget.order.active ? '${widget.order.orderStatus.status}' : S.of(context).canceled,
-            maxLines: 1,
-            overflow: TextOverflow.fade,
-            softWrap: false,
-            style: Theme.of(context).textTheme.caption.merge(TextStyle(height: 1, color: Theme.of(context).primaryColor)),
-          ),
-        ),
+        // Container(
+        //   margin: EdgeInsetsDirectional.only(start: 20),
+        //   padding: EdgeInsets.symmetric(horizontal: 10),
+        //   height: 28,
+        //   width: 140,
+        //   decoration: BoxDecoration(
+        //       borderRadius: BorderRadius.all(Radius.circular(100)), color: widget.order.active ? Theme.of(context).accentColor : Colors.redAccent),
+        //   alignment: AlignmentDirectional.center,
+        //   child: Text(
+        //     widget.order.active ? '${widget.order.orderStatus.status}' : S.of(context).canceled,
+        //     maxLines: 1,
+        //     overflow: TextOverflow.fade,
+        //     softWrap: false,
+        //     style: Theme.of(context).textTheme.caption.merge(TextStyle(height: 1, color: Theme.of(context).primaryColor)),
+        //   ),
+        // ),
       ],
     );
   }

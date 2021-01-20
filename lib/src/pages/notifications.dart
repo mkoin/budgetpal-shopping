@@ -47,50 +47,58 @@ class _NotificationsWidgetState extends StateMVC<NotificationsWidget> {
       ),
       body: currentUser.value.apiToken == null
           ? PermissionDeniedWidget()
-          : RefreshIndicator(
-              onRefresh: _con.refreshNotifications,
-              child: _con.notifications.isEmpty
-                  ? EmptyNotificationsWidget()
-                  : SingleChildScrollView(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20, right: 10),
-                            child: ListTile(
-                              contentPadding: EdgeInsets.symmetric(vertical: 0),
-                              leading: Icon(
-                                Icons.notifications,
-                                color: Theme.of(context).hintColor,
+          : Stack(
+            children: [
+              RefreshIndicator(
+                  onRefresh: _con.refreshNotifications,
+                  child: _con.notifications.isEmpty
+                      ? EmptyNotificationsWidget()
+                      : SingleChildScrollView(
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20, right: 10),
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.symmetric(vertical: 0),
+                                  leading: Icon(
+                                    Icons.notifications,
+                                    color: Theme.of(context).hintColor,
+                                  ),
+                                  title: Text(
+                                    S.of(context).notifications,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context).textTheme.headline4,
+                                  ),
+                                ),
                               ),
-                              title: Text(
-                                S.of(context).notifications,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.headline4,
+                              ListView.separated(
+                                padding: EdgeInsets.symmetric(vertical: 15),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                primary: false,
+                                itemCount: _con.notifications.length,
+                                separatorBuilder: (context, index) {
+                                  return SizedBox(height: 15);
+                                },
+                                itemBuilder: (context, index) {
+                                  return NotificationItemWidget(notification: _con.notifications.elementAt(index));
+                                },
                               ),
-                            ),
+                            ],
                           ),
-                          ListView.separated(
-                            padding: EdgeInsets.symmetric(vertical: 15),
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            primary: false,
-                            itemCount: _con.notifications.length,
-                            separatorBuilder: (context, index) {
-                              return SizedBox(height: 15);
-                            },
-                            itemBuilder: (context, index) {
-                              return NotificationItemWidget(notification: _con.notifications.elementAt(index));
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-            ),
+                        ),
+                ),
+              // Divider(
+              //   thickness: 3,
+              //   color: Color(0xffe3e4ff),
+              // ),
+            ],
+          ),
     );
   }
 }

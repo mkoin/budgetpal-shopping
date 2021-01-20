@@ -223,6 +223,8 @@ class _HomeWidgetState extends StateMVC<HomeWidget> {
                           ),
                           Text(
                             userAddress,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           )
                         ],
                       ),
