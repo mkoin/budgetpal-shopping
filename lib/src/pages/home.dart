@@ -33,7 +33,7 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends StateMVC<HomeWidget> {
   HomeController _con;
   bool _hasLocation = false;
-  var userAddress = "";
+  var userAddress = "Set delivery location";
 
   _HomeWidgetState() : super(HomeController()) {
     _con = controller;
@@ -42,7 +42,7 @@ class _HomeWidgetState extends StateMVC<HomeWidget> {
   @override
   void initState() {
     super.initState();
-    _getLocationState();
+    // _getLocationState();
     _locationScreenToShow();
   }
 
@@ -55,6 +55,9 @@ class _HomeWidgetState extends StateMVC<HomeWidget> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool intValue = prefs.getBool('locationState');
     userAddress = prefs.getString('locationName');
+    if (userAddress == null) {
+      userAddress = "Set delivery location";
+    }
     _hasLocation = intValue;
     return intValue;
   }
@@ -222,7 +225,7 @@ class _HomeWidgetState extends StateMVC<HomeWidget> {
                             color: Colors.red,
                           ),
                           Text(
-                            userAddress,
+                            "${userAddress}",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           )

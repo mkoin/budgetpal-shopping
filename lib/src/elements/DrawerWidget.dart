@@ -21,7 +21,9 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
         children: <Widget>[
           GestureDetector(
             onTap: () {
-              currentUser.value.apiToken != null ? Navigator.of(context).pushNamed('/Profile') : Navigator.of(context).pushNamed('/Login');
+              currentUser.value.apiToken != null
+                  ? Navigator.of(context).pushNamed('/Profile')
+                  : Navigator.of(context).pushNamed('/Login');
             },
             child: currentUser.value.apiToken != null
                 ? UserAccountsDrawerHeader(
@@ -38,7 +40,8 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
                     ),
                     currentAccountPicture: CircleAvatar(
                       backgroundColor: Theme.of(context).accentColor,
-                      backgroundImage: NetworkImage(currentUser.value.image.thumb),
+                      backgroundImage:
+                          NetworkImage(currentUser.value.image.thumb),
                     ),
                   )
                 : Container(
@@ -98,6 +101,19 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
             ),
             title: Text(
               S.of(context).my_orders,
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.of(context).pushNamed('/Vouchers');
+            },
+            leading: Icon(
+              Icons.wallet_giftcard,
+              color: Theme.of(context).focusColor.withOpacity(1),
+            ),
+            title: Text(
+              S.of(context).vouchers,
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
@@ -184,7 +200,9 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
               color: Theme.of(context).focusColor.withOpacity(1),
             ),
             title: Text(
-              Theme.of(context).brightness == Brightness.dark ? S.of(context).light_mode : S.of(context).dark_mode,
+              Theme.of(context).brightness == Brightness.dark
+                  ? S.of(context).light_mode
+                  : S.of(context).dark_mode,
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
@@ -203,7 +221,9 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
               color: Theme.of(context).focusColor.withOpacity(1),
             ),
             title: Text(
-              currentUser.value.apiToken != null ? S.of(context).log_out : S.of(context).login,
+              currentUser.value.apiToken != null
+                  ? S.of(context).log_out
+                  : S.of(context).login,
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:markets/src/pages/LandingPage.dart';
+import 'package:markets/src/pages/vaouchers_page.dart';
 
 import 'src/models/route_argument.dart';
 import 'src/pages/cart.dart';
@@ -46,6 +47,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => LoginWidget());
       case '/Profile':
         return MaterialPageRoute(builder: (_) => ProfileWidget());
+      case '/Vouchers':
+        return MaterialPageRoute(builder: (_) => VouchersPage());
       case '/ForgetPassword':
         return MaterialPageRoute(builder: (_) => ForgetPasswordWidget());
       case '/Pages':

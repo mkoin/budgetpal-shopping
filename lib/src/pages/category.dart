@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:markets/src/elements/CaregoriesCarouselWidget.dart';
+import 'package:markets/src/elements/ShoppingSubTotalWidget.dart';
+import 'package:markets/src/helpers/helper.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../generated/l10n.dart';
 import '../controllers/category_controller.dart';
@@ -27,7 +30,7 @@ class CategoryWidget extends StatefulWidget {
 class _CategoryWidgetState extends StateMVC<CategoryWidget> {
   // TODO add layout in configuration file
   String layout = 'list';
-
+  double shoppingSubTotal = 0.0;
   CategoryController _con;
 
   _CategoryWidgetState() : super(CategoryController()) {
@@ -47,6 +50,25 @@ class _CategoryWidgetState extends StateMVC<CategoryWidget> {
     return Scaffold(
       key: _con.scaffoldKey,
       drawer: DrawerWidget(),
+      bottomNavigationBar: _con.loadCart
+          ? BottomAppBar()
+          : BottomAppBar(
+              color: Colors.blue,
+              child: GestureDetector(
+                onTap: () {
+                  if (currentUser.value.apiToken != null) {
+                    Navigator.of(context).pushNamed('/Cart',
+                        arguments: RouteArgument(param: '/Pages', id: '2'));
+                  } else {
+                    Navigator.of(context).pushNamed('/Login');
+                  }
+                },
+                child: ShoppingSubTotalWidget(
+                    iconColor: Theme.of(context).hintColor,
+                    labelColor: Theme.of(context).accentColor),
+              ),
+              elevation: 0,
+            ),
       endDrawer: FilterWidget(onFilter: (filter) {
         Navigator.of(context).pushReplacementNamed('/Category',
             arguments: RouteArgument(id: widget.routeArgument.id));
@@ -262,4 +284,5 @@ class _CategoryWidgetState extends StateMVC<CategoryWidget> {
       ),
     );
   }
+
 }

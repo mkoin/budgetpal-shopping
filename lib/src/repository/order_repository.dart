@@ -3,7 +3,9 @@ import 'dart:io';
 
 import 'package:global_configuration/global_configuration.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:markets/src/models/voucher.dart';
+import 'package:markets/src/models/voucher_type.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/custom_trace.dart';
@@ -63,6 +65,55 @@ Future<Stream<Voucher>> getMyVouchers() async {
   } catch (e) {
     print(CustomTrace(StackTrace.current, message: url).toString());
     return new Stream.value(new Voucher.fromJSON({}));
+  }
+}
+
+///GET VOUCHER TYPES
+Future<Map> getVoucherTypes() async {
+  User _user = userRepo.currentUser.value;
+  if (_user.apiToken == null) {
+    var res = {
+      "status": false,
+      "data": "",
+    };
+    return res;
+  }
+  final String _apiToken = 'api_token=${_user.apiToken}&';
+  final String url =
+      '${GlobalConfiguration().getString('api_base_url')}voucher_types?${_apiToken}';
+  try {
+    // final client = new http.Client();
+    // final streamedRest = await client.send(http.Request('get', Uri.parse(url)));
+    //
+    // print("VoucherType $streamedRest");
+    // return streamedRest.stream
+    //     .transform(utf8.decoder)
+    //     .transform(json.decoder)
+    //     .map((data){
+    //       // Helper.getData(data);
+    //   print("VoucherType $data");
+    //   return "Done";
+    //     });
+    //     .expand((data) => (data as List))
+    //     .map((data) {
+    //   print("VoucherType $data");
+    //   return" VoucherType.fromJSON(data)";
+    // });
+    Response response = await get(url);
+    String content = response.body;
+    print("VoucherType $content");
+    var res = {
+      "status": jsonDecode(content)['success'],
+      "data": jsonDecode(content)['data'],
+    };
+    return res;
+  } catch (e) {
+    print(CustomTrace(StackTrace.current, message: url).toString());
+    var res = {
+      "status": false,
+      "data": "",
+    };
+    return res;
   }
 }
 
@@ -150,9 +201,50 @@ Future<Order> addOrder(Order order, Payment payment) async {
     headers: {HttpHeaders.contentTypeHeader: 'application/json'},
     body: json.encode(params),
   );
-  print("BBBBBBBBBBB ${json.decode(response.body)['message']}");
   await prefs.setString('orderResponse', json.decode(response.body)['message']);
   return Order.fromJSON(json.decode(response.body)['data']);
+}
+
+Future<Map> createVoucher(
+  String phone,
+  String amount,
+  String dailyAmount,
+  String monthlyAmount,
+  String voucher_type,
+) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  User _user = userRepo.currentUser.value;
+  if (_user.apiToken == null) {
+    var res = {
+      "status": false,
+      "message": "Unable to create voucher",
+    };
+    return res;
+  }
+  final String _apiToken = 'api_token=${_user.apiToken}';
+  final String url =
+      '${GlobalConfiguration().getString('api_base_url')}voucher?$_apiToken';
+  final client = new http.Client();
+
+  var data = {
+    "phone": phone,
+    "amount": amount,
+    "voucher_type": voucher_type,
+    "daily_limit": dailyAmount,
+    "monthly_limit": monthlyAmount,
+  };
+  final response = await client.post(
+    url,
+    headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+    body: json.encode(data),
+  );
+  print("KINNNYYYYYYYYYYYYA ${response.body}");
+  // await prefs.setString('orderResponse', json.decode(response.body)['message']);
+  var res = {
+    "status": json.decode(response.body)['success'],
+    "message": json.decode(response.body)['message'],
+  };
+  return res;
 }
 
 Future<Order> cancelOrder(Order order) async {

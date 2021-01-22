@@ -649,6 +649,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0-nullsafety.2"
+  spinner:
+    dependency: "direct main"
+    description:
+      name: spinner
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   sqflite:
     dependency: transitive
     description:

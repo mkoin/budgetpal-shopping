@@ -96,7 +96,6 @@ class CartBottomDetailsWidget extends StatelessWidget {
                             SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
                             prefs.setDouble("SubTotal", _con.total);
-                            print("NIPO ${_con.total}");
                             _con.goCheckout(context);
                           },
                           disabledColor:

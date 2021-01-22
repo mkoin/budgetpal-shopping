@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:markets/src/helpers/helper.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../generated/l10n.dart';
 import '../models/cart.dart';
@@ -124,14 +126,17 @@ class CategoryController extends ControllerMVC {
     }
   }
 
+
   Cart isExistInCart(Cart _cart) {
-    return carts.firstWhere((Cart oldCart) => _cart.isSame(oldCart), orElse: () => null);
+    return carts.firstWhere((Cart oldCart) => _cart.isSame(oldCart),
+        orElse: () => null);
   }
 
   Future<void> refreshCategory() async {
     products.clear();
     category = new Category();
-    listenForProductsByCategory(message: S.of(context).category_refreshed_successfuly);
+    listenForProductsByCategory(
+        message: S.of(context).category_refreshed_successfuly);
     listenForCategory(message: S.of(context).category_refreshed_successfuly);
   }
 }

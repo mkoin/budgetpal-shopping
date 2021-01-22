@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:markets/src/repository/user_repository.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controllers/splash_screen_controller.dart';
 
@@ -22,6 +23,12 @@ class SplashScreenState extends StateMVC<SplashScreen> {
   void initState() {
     super.initState();
     loadData();
+    _getLocationState();
+  }
+
+  _getLocationState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('locationState', false);
   }
 
   void loadData() {

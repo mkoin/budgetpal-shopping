@@ -21,7 +21,7 @@ class LandingPageWidget extends StatefulWidget {
 
 class _LandingPageWidgetState extends StateMVC<LandingPageWidget> {
   CartController _con;
-  var userAddress = "";
+  var userAddress = "Set delivery location";
 
   _LandingPageWidgetState() : super(CartController()) {
     _con = controller;
@@ -37,6 +37,9 @@ class _LandingPageWidgetState extends StateMVC<LandingPageWidget> {
   Future<void> _locationScreenToShow() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userAddress = prefs.getString('locationName');
+    if (userAddress == null) {
+      userAddress = "Set delivery location";
+    }
   }
 
   @override
@@ -81,14 +84,16 @@ class _LandingPageWidgetState extends StateMVC<LandingPageWidget> {
                                   color: Colors.red,
                                 ),
                                 Text(
-                                  userAddress,
+                                  "${userAddress}",
                                 )
                               ],
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 20, right: 10),
+                              padding:
+                                  const EdgeInsets.only(left: 20, right: 10),
                               child: ListTile(
-                                contentPadding: EdgeInsets.symmetric(vertical: 0),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 0),
                                 leading: Icon(
                                   Icons.shopping_cart,
                                   color: Theme.of(context).hintColor,
@@ -184,10 +189,10 @@ class _LandingPageWidgetState extends StateMVC<LandingPageWidget> {
                       ],
                     ),
             ),
-            Divider(
-              thickness: 3,
-              color: Color(0xffe3e4ff),
-            ),
+            // Divider(
+            //   thickness: 3,
+            //   color: Color(0xffe3e4ff),
+            // ),
           ],
         ),
       ),
