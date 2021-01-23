@@ -7,14 +7,22 @@ import '../models/product.dart';
 import '../models/route_argument.dart';
 
 // ignore: must_be_immutable
-class ProductListItemWidget extends StatelessWidget {
+class ProductListItemWidget extends StatefulWidget {
   String heroTag;
   Product product;
+  final bool isAddedToCart;
   final VoidCallback onPressed;
+  var quantity = 1;
 
-  ProductListItemWidget({Key key, this.heroTag, this.product, this.onPressed})
+  ProductListItemWidget(
+      {Key key, this.heroTag, this.isAddedToCart, this.product, this.onPressed})
       : super(key: key);
 
+  @override
+  _ProductListItemWidgetState createState() => _ProductListItemWidgetState();
+}
+
+class _ProductListItemWidgetState extends State<ProductListItemWidget> {
   ProductController _con = new ProductController();
 
   @override
@@ -25,8 +33,8 @@ class ProductListItemWidget extends StatelessWidget {
       highlightColor: Theme.of(context).primaryColor,
       onTap: () {
         Navigator.of(context).pushNamed('/Product',
-            arguments:
-                new RouteArgument(heroTag: this.heroTag, id: this.product.id));
+            arguments: new RouteArgument(
+                heroTag: this.widget.heroTag, id: this.widget.product.id));
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -43,14 +51,14 @@ class ProductListItemWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Hero(
-              tag: heroTag + product.id,
+              tag: widget.heroTag + widget.product.id,
               child: Container(
                 height: 60,
                 width: 60,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                   image: DecorationImage(
-                      image: NetworkImage(product.image.thumb),
+                      image: NetworkImage(widget.product.image.thumb),
                       fit: BoxFit.cover),
                 ),
               ),
@@ -65,13 +73,13 @@ class ProductListItemWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          product.name,
+                          widget.product.name,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
                         Text(
-                          product.market.name,
+                          widget.product.market.name,
                           overflow: TextOverflow.fade,
                           softWrap: false,
                           style: Theme.of(context).textTheme.caption,
@@ -82,22 +90,72 @@ class ProductListItemWidget extends StatelessWidget {
                   SizedBox(width: 8),
                   Column(
                     children: [
-                      Helper.getPrice(product.price, context,
+                      Helper.getPrice(widget.product.price, context,
                           style: Theme.of(context).textTheme.headline4),
-                      RaisedButton(
-                        color: Theme.of(context).accentColor,
-                        onPressed: () {
-                          if (currentUser.value.apiToken == null) {
-                            Navigator.of(context).pushNamed("/Login");
-                          } else {
-                            onPressed();
-                          }
-                        },
-                        child: Text(
-                          "Order",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
+                      widget.isAddedToCart
+                          ? Container(
+                              color: Colors.greenAccent,
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          if(widget.quantity>0){
+                                            widget.quantity -= 1;
+                                          }
+                                        });
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Icon(
+                                          Icons.remove,
+                                          size: 28,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      widget.quantity.toString(),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          widget.quantity += 1;
+                                        });
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 28,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : RaisedButton(
+                              color: Theme.of(context).accentColor,
+                              onPressed: () {
+                                if (currentUser.value.apiToken == null) {
+                                  Navigator.of(context).pushNamed("/Login");
+                                } else {
+                                  widget.onPressed();
+                                }
+                              },
+                              child: Text(
+                                "Order",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
                     ],
                   ),
                 ],

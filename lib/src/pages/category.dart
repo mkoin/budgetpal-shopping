@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:markets/src/elements/CaregoriesCarouselWidget.dart';
 import 'package:markets/src/elements/ShoppingSubTotalWidget.dart';
 import 'package:markets/src/helpers/helper.dart';
+import 'package:markets/src/models/product.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -32,6 +33,7 @@ class _CategoryWidgetState extends StateMVC<CategoryWidget> {
   String layout = 'list';
   double shoppingSubTotal = 0.0;
   CategoryController _con;
+  List<Product> _productsChosen = <Product>[];
 
   _CategoryWidgetState() : super(CategoryController()) {
     _con = controller;
@@ -187,6 +189,8 @@ class _CategoryWidgetState extends StateMVC<CategoryWidget> {
                           return ProductListItemWidget(
                               heroTag: 'favorites_list',
                               product: _con.products.elementAt(index),
+                              isAddedToCart: _productsChosen
+                                  .contains(_con.products.elementAt(index)),
                               onPressed: () {
                                 if (currentUser.value.apiToken == null) {
                                   Navigator.of(context).pushNamed('/Login');
@@ -195,6 +199,10 @@ class _CategoryWidgetState extends StateMVC<CategoryWidget> {
                                       _con.products.elementAt(index))) {
                                     _con.addToCart(
                                         _con.products.elementAt(index));
+                                    setState(() {
+                                      _productsChosen
+                                          .add(_con.products.elementAt(index));
+                                    });
                                   } else {
                                     showDialog(
                                       context: context,
@@ -208,6 +216,10 @@ class _CategoryWidgetState extends StateMVC<CategoryWidget> {
                                                 _con.products.elementAt(index),
                                             onPressed: (product,
                                                 {reset: true}) {
+                                              setState(() {
+                                                _productsChosen
+                                                    .remove(_con.products.elementAt(index));
+                                              });
                                               return _con.addToCart(
                                                   _con.products
                                                       .elementAt(index),
@@ -242,6 +254,8 @@ class _CategoryWidgetState extends StateMVC<CategoryWidget> {
                         children: List.generate(_con.products.length, (index) {
                           return ProductGridItemWidget(
                               heroTag: 'category_grid',
+                              isAddedToCart: _productsChosen
+                                  .contains(_con.products.elementAt(index)),
                               product: _con.products.elementAt(index),
                               onPressed: () {
                                 if (currentUser.value.apiToken == null) {
@@ -251,6 +265,10 @@ class _CategoryWidgetState extends StateMVC<CategoryWidget> {
                                       _con.products.elementAt(index))) {
                                     _con.addToCart(
                                         _con.products.elementAt(index));
+                                    setState(() {
+                                      _productsChosen
+                                          .add(_con.products.elementAt(index));
+                                    });
                                   } else {
                                     showDialog(
                                       context: context,
@@ -264,6 +282,10 @@ class _CategoryWidgetState extends StateMVC<CategoryWidget> {
                                                 _con.products.elementAt(index),
                                             onPressed: (product,
                                                 {reset: true}) {
+                                              setState(() {
+                                                _productsChosen
+                                                    .remove(_con.products.elementAt(index));
+                                              });
                                               return _con.addToCart(
                                                   _con.products
                                                       .elementAt(index),

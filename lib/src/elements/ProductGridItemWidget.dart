@@ -10,9 +10,12 @@ import '../models/route_argument.dart';
 class ProductGridItemWidget extends StatefulWidget {
   final String heroTag;
   final Product product;
+  final bool isAddedToCart;
   final VoidCallback onPressed;
+  var quantity = 1;
 
-  ProductGridItemWidget({Key key, this.heroTag, this.product, this.onPressed})
+  ProductGridItemWidget(
+      {Key key, this.heroTag, this.isAddedToCart, this.product, this.onPressed})
       : super(key: key);
 
   @override
@@ -64,20 +67,66 @@ class _ProductGridItemWidgetState extends State<ProductGridItemWidget> {
                 overflow: TextOverflow.ellipsis,
               ),
               Center(
-                child: RaisedButton(
-                  color: Theme.of(context).accentColor,
-                  onPressed: () {
-                    if (currentUser.value.apiToken == null) {
-                      Navigator.of(context).pushNamed("/Login");
-                    } else {
-                      widget.onPressed();
-                    }
-                  },
-                  child: Text(
-                    "Order",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
+                child: widget.isAddedToCart
+                    ? Container(
+                        color: Colors.greenAccent,
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    if (widget.quantity > 0) {
+                                      widget.quantity -= 1;
+                                    }
+                                  });
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Icon(
+                                    Icons.remove,
+                                    size: 28,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                widget.quantity.toString(),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    widget.quantity += 1;
+                                  });
+                                },
+                                child: Icon(
+                                  Icons.add,
+                                  size: 28,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    : RaisedButton(
+                        color: Theme.of(context).accentColor,
+                        onPressed: () {
+                          if (currentUser.value.apiToken == null) {
+                            Navigator.of(context).pushNamed("/Login");
+                          } else {
+                            widget.onPressed();
+                          }
+                        },
+                        child: Text(
+                          "Order",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
               ),
             ],
           ),
