@@ -114,7 +114,7 @@ class _CartWidgetState extends StateMVC<CartWidget> {
                           ),
                         ),
                         Container(
-                          height: 296,
+                          height: 290,
                           child: ListView.separated(
                             physics: const AlwaysScrollableScrollPhysics(),
                             padding: EdgeInsets.symmetric(vertical: 15),

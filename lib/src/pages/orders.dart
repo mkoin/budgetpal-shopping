@@ -31,6 +31,12 @@ class _OrdersWidgetState extends StateMVC<OrdersWidget> {
     return Scaffold(
       key: _con.scaffoldKey,
       appBar: AppBar(
+        bottom: PreferredSize(
+            child: Container(
+              color: Colors.orange,
+              height: 1.0,
+            ),
+            preferredSize: Size.fromHeight(2.0)),
         leading: new IconButton(
           icon: new Icon(Icons.sort, color: Theme.of(context).hintColor),
           onPressed: () => widget.parentScaffoldKey.currentState.openDrawer(),
@@ -56,51 +62,43 @@ class _OrdersWidgetState extends StateMVC<OrdersWidget> {
           ? PermissionDeniedWidget()
           : _con.orders.isEmpty
               ? EmptyOrdersWidget()
-              : Stack(
-                  children: [
-                    RefreshIndicator(
-                      onRefresh: _con.refreshOrders,
-                      child: SingleChildScrollView(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            // Padding(
-                            //   padding: const EdgeInsets.symmetric(horizontal: 20),
-                            //   child: SearchBarWidget(),
-                            // ),
-                            // SizedBox(height: 20),
-                            ListView.separated(
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              primary: false,
-                              itemCount: _con.orders.length,
-                              itemBuilder: (context, index) {
-                                var _order = _con.orders.elementAt(index);
-                                return OrderItemWidget(
-                                  expanded: index == 0 ? true : false,
-                                  order: _order,
-                                  onCanceled: (e) {
-                                    _con.doCancelOrder(_order);
-                                  },
-                                );
-                              },
-                              separatorBuilder: (context, index) {
-                                return SizedBox(height: 20);
-                              },
-                            ),
-                          ],
-                        ),
+              : RefreshIndicator(
+                onRefresh: _con.refreshOrders,
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 20),
+                      //   child: SearchBarWidget(),
+                      // ),
+                      // SizedBox(height: 20),
+                      ListView.separated(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        primary: false,
+                        itemCount: _con.orders.length,
+                        itemBuilder: (context, index) {
+                          var _order = _con.orders.elementAt(index);
+                          return OrderItemWidget(
+                            expanded: index == 0 ? true : false,
+                            order: _order,
+                            onCanceled: (e) {
+                              _con.doCancelOrder(_order);
+                            },
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return SizedBox(height: 20);
+                        },
                       ),
-                    ),
-                    Divider(
-                      thickness: 3,
-                      color: Color(0xffe3e4ff),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
+              ),
     );
   }
 }

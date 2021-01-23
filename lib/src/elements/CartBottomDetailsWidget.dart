@@ -19,7 +19,7 @@ class CartBottomDetailsWidget extends StatelessWidget {
     return _con.carts.isEmpty
         ? SizedBox(height: 0)
         : Container(
-            height: 200,
+            height: 205,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor,
@@ -51,7 +51,7 @@ class CartBottomDetailsWidget extends StatelessWidget {
                           zeroPlaceholder: '0')
                     ],
                   ),
-                  SizedBox(height: 5),
+                  // SizedBox(height: 5),
                   Row(
                     children: <Widget>[
                       Expanded(
@@ -84,6 +84,18 @@ class CartBottomDetailsWidget extends StatelessWidget {
                           style: Theme.of(context).textTheme.subtitle1)
                     ],
                   ),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          'Total',
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                      ),
+                      Helper.getPrice(_con.total, context,
+                          style:  Theme.of(context).textTheme.subtitle1),
+                    ],
+                  ),
                   SizedBox(height: 10),
                   Stack(
                     fit: StackFit.loose,
@@ -114,14 +126,14 @@ class CartBottomDetailsWidget extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Helper.getPrice(_con.total, context,
-                            style: Theme.of(context).textTheme.headline4.merge(
-                                TextStyle(
-                                    color: Theme.of(context).primaryColor)),
-                            zeroPlaceholder: 'Free'),
-                      )
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 20),
+                      //   child: Helper.getPrice(_con.total, context,
+                      //       style: Theme.of(context).textTheme.headline4.merge(
+                      //           TextStyle(
+                      //               color: Theme.of(context).primaryColor)),
+                      //       zeroPlaceholder: 'Free'),
+                      // )
                     ],
                   ),
                   SizedBox(height: 10),
