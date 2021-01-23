@@ -71,9 +71,7 @@ class _PagesWidgetState extends State<PagesWidget> {
           break;
         case 3:
           widget.currentPage =
-              HomeWidget(parentScaffoldKey: widget.scaffoldKey);
-          // widget.currentPage =
-          //     OrdersWidget(parentScaffoldKey: widget.scaffoldKey);
+              OrdersWidget(parentScaffoldKey: widget.scaffoldKey);
           break;
         case 4:
           widget.currentPage =

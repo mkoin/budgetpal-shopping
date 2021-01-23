@@ -29,6 +29,7 @@ class SplashScreenState extends StateMVC<SplashScreen> {
   _getLocationState() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('locationState', false);
+    prefs.setString('delivery_schedule_id', "1");
   }
 
   void loadData() {

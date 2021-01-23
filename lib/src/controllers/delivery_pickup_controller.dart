@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:markets/src/models/schedule.dart';
+import 'package:markets/src/repository/user_repository.dart';
 
 import '../../generated/l10n.dart';
 import '../models/address.dart' as model;
@@ -11,6 +13,7 @@ class DeliveryPickupController extends CartController {
   GlobalKey<ScaffoldState> scaffoldKey;
   model.Address deliveryAddress;
   PaymentMethodList list;
+  List<Schedule> schedules = <Schedule>[];
 
   DeliveryPickupController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -46,6 +49,26 @@ class DeliveryPickupController extends CartController {
       scaffoldKey?.currentState?.showSnackBar(SnackBar(
         content: Text(S.of(context).the_address_updated_successfully),
       ));
+    });
+  }
+
+  void schedulePickUpTimes({String message}) async {
+    final Stream<Schedule> stream = await scheduleTimes();
+    stream.listen((Schedule _schedules) {
+      setState(() {
+        schedules.add(_schedules);
+      });
+    }, onError: (a) {
+      print(a);
+      scaffoldKey?.currentState?.showSnackBar(SnackBar(
+        content: Text(S.of(context).verify_your_internet_connection),
+      ));
+    }, onDone: () {
+      if (message != null) {
+        scaffoldKey?.currentState?.showSnackBar(SnackBar(
+          content: Text(message),
+        ));
+      }
     });
   }
 

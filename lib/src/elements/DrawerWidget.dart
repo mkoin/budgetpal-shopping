@@ -122,7 +122,7 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
               Navigator.of(context).pushNamed('/Pages', arguments: 4);
             },
             leading: Icon(
-              Icons.favorite,
+              Icons.shopping_basket,
               color: Theme.of(context).focusColor.withOpacity(1),
             ),
             title: Text(

@@ -110,101 +110,107 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
                 : SizedBox(
                     height: 0,
                   ),
-            Container(
-              height: 105,
-              child: ListView.builder(
-                itemCount: this.voucher.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  double _marginLeft = 0;
-                  (index == 0) ? _marginLeft = 20 : _marginLeft = 0;
-                  return InkWell(
-                    splashColor: Theme.of(context).accentColor,
-                    focusColor: Theme.of(context).accentColor,
-                    highlightColor: Theme.of(context).primaryColor,
-                    onTap: () {
-                      if (_subTotal > int.parse(voucher[index].amount)) {
-                        showDialog(
-                            context: context,
-                            builder: (_) => new CupertinoAlertDialog(
-                                  title: new Text("Funds Insufficient"),
-                                  content: new Text(
-                                      "\nVoucher Insufficient for this Shopping"),
-                                  actions: <Widget>[
-                                    FlatButton(
-                                      child: Text('Ok'),
-                                      onPressed: () {
-                                        setState(() {
-                                          _setVoucherPaymentSuccessVisible =
-                                              false;
-                                          _chosenCashPayment = '';
-                                        });
-                                        Navigator.of(context).pop();
-                                      },
+            voucher.length > 0
+                ? Container(
+                    height: 105,
+                    child: ListView.builder(
+                      itemCount: this.voucher.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        double _marginLeft = 0;
+                        (index == 0) ? _marginLeft = 20 : _marginLeft = 0;
+                        return InkWell(
+                          splashColor: Theme.of(context).accentColor,
+                          focusColor: Theme.of(context).accentColor,
+                          highlightColor: Theme.of(context).primaryColor,
+                          onTap: () {
+                            if (_subTotal > int.parse(voucher[index].amount)) {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) => new CupertinoAlertDialog(
+                                        title: new Text("Funds Insufficient"),
+                                        content: new Text(
+                                            "\nVoucher Insufficient for this Shopping"),
+                                        actions: <Widget>[
+                                          FlatButton(
+                                            child: Text('Ok'),
+                                            onPressed: () {
+                                              setState(() {
+                                                _setVoucherPaymentSuccessVisible =
+                                                    false;
+                                                _chosenCashPayment = '';
+                                              });
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      ));
+                            } else {
+                              setState(() {
+                                _submitPurchase = true;
+                                _chosenCashPayment = '';
+                                theChoseRoute = '/vouchers';
+                                _setVoucherPaymentSuccessVisible = true;
+                              });
+                            }
+                            setState(() {
+                              _chosenVoucher = index;
+                              _chosenCashPayment = '';
+                            });
+                            // Navigator.of(context).pushNamed(this.paymentMethod.route);
+                            // print(this.paymentMethod.name);
+                          },
+                          child: Card(
+                            color: _chosenVoucher == index
+                                ? Colors.cyan
+                                : Colors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Center(
+                                    child: CachedNetworkImage(
+                                      height: 40,
+                                      width: 60,
+                                      fit: BoxFit.fill,
+                                      imageUrl: voucher[index].image_url,
+                                      placeholder: (context, url) =>
+                                          Image.asset(
+                                        'assets/img/loading.gif',
+                                        fit: BoxFit.cover,
+                                        height: 40,
+                                        width: 60,
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Center(child: Icon(Icons.error)),
                                     ),
-                                  ],
-                                ));
-                      } else {
-                        setState(() {
-                          _submitPurchase = true;
-                          _chosenCashPayment = '';
-                          theChoseRoute = '/vouchers';
-                          _setVoucherPaymentSuccessVisible = true;
-                        });
-                      }
-                      setState(() {
-                        _chosenVoucher = index;
-                        _chosenCashPayment = '';
-                      });
-                      // Navigator.of(context).pushNamed(this.paymentMethod.route);
-                      // print(this.paymentMethod.name);
-                    },
-                    child: Card(
-                      color:
-                          _chosenVoucher == index ? Colors.cyan : Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: <Widget>[
-                            Center(
-                              child: CachedNetworkImage(
-                                height: 40,
-                                width: 60,
-                                fit: BoxFit.fill,
-                                imageUrl: voucher[index].image_url,
-                                placeholder: (context, url) => Image.asset(
-                                  'assets/img/loading.gif',
-                                  fit: BoxFit.cover,
-                                  height: 40,
-                                  width: 60,
-                                ),
-                                errorWidget: (context, url, error) =>
-                                    Center(child: Icon(Icons.error)),
+                                  ),
+                                  Text(
+                                    voucher[index].name,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 3,
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "Ksh.${voucher[index].amount}",
+                                    overflow: TextOverflow.fade,
+                                    softWrap: false,
+                                    style: TextStyle(
+                                        color: Colors.green, fontSize: 12),
+                                  ),
+                                ],
                               ),
                             ),
-                            Text(
-                              voucher[index].name,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 3,
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "Ksh.${voucher[index].amount}",
-                              overflow: TextOverflow.fade,
-                              softWrap: false,
-                              style:
-                                  TextStyle(color: Colors.green, fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      ),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
-            ),
+                  )
+                : SizedBox(
+                    height: 0,
+                  ),
             _setVoucherPaymentSuccessVisible
                 ? Container(
                     color: Colors.red.withOpacity(0.1),

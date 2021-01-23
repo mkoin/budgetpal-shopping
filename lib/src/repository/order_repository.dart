@@ -183,6 +183,7 @@ Future<Stream<OrderStatus>> getOrderStatus() async {
 
 Future<Order> addOrder(Order order, Payment payment) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
+  var delivery_schedule = prefs.getString('delivery_schedule_id');
   User _user = userRepo.currentUser.value;
   if (_user.apiToken == null) {
     return new Order();
@@ -190,6 +191,7 @@ Future<Order> addOrder(Order order, Payment payment) async {
   CreditCard _creditCard = await userRepo.getCreditCard();
   order.user = _user;
   order.payment = payment;
+  order.delivery_schedule_id = delivery_schedule;
   final String _apiToken = 'api_token=${_user.apiToken}';
   final String url =
       '${GlobalConfiguration().getString('api_base_url')}orders?$_apiToken';
@@ -201,6 +203,7 @@ Future<Order> addOrder(Order order, Payment payment) async {
     headers: {HttpHeaders.contentTypeHeader: 'application/json'},
     body: json.encode(params),
   );
+  print("Resp shrdpred$delivery_schedule");
   await prefs.setString('orderResponse', json.decode(response.body)['message']);
   return Order.fromJSON(json.decode(response.body)['data']);
 }

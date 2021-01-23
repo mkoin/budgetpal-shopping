@@ -31,6 +31,8 @@ class DeliveryPickupWidget extends StatefulWidget {
 class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
   DeliveryPickupController _con;
   var userAddress = 'info';
+  var userSchedules = 'SCHEDULE';
+  var chosenSchedules = 'none';
   SingingCharacter _character = SingingCharacter.ASAP;
 
   _DeliveryPickupWidgetState() : super(DeliveryPickupController()) {
@@ -39,6 +41,7 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
 
   @override
   void initState() {
+    _con.schedulePickUpTimes();
     super.initState();
     _locationScreenToShow();
   }
@@ -221,21 +224,25 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
                         title: Text('ASAP', style: TextStyle(fontSize: 12)),
                         value: SingingCharacter.ASAP,
                         groupValue: _character,
-                        onChanged: (SingingCharacter value) {
+                        onChanged: (SingingCharacter value) async{
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.setString('delivery_schedule_id', "1");
                           setState(() {
                             _character = value;
+                            userSchedules = "ASAP";
                           });
                         },
                       ),
                     ),
                     Expanded(
                       child: RadioListTile<SingingCharacter>(
-                        title:
-                            Text('SCHEDULE', style: TextStyle(fontSize: 12)),
+                        title: Text('$userSchedules',
+                            style: TextStyle(fontSize: 12)),
                         value: SingingCharacter.SCHEDULED,
                         groupValue: _character,
                         onChanged: (SingingCharacter value) {
                           showDialog(
+                            barrierDismissible: false,
                             context: context,
                             builder: (_) => new AlertDialog(
                               title: Column(
@@ -250,11 +257,19 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
                                 // color: Colors.blue,
                                 height: 170,
                                 child: ListView.builder(
-                                  itemCount: 3,
+                                  itemCount: _con.schedules.length,
                                   itemBuilder: (context, index) {
                                     return GestureDetector(
-                                      onTap: (){
+                                      onTap: () async{
                                         Navigator.of(context).pop();
+                                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                                        prefs.setString('delivery_schedule_id', _con.schedules[index].id);
+                                        setState(() {
+                                          chosenSchedules =
+                                              _con.schedules[index].id;
+                                          userSchedules =
+                                              "SCHEDULE\n${_con.schedules[index].name} ${_con.schedules[index].timeline}";
+                                        });
                                       },
                                       child: Card(
                                         child: Padding(
@@ -264,14 +279,14 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "${(index + 1)}. Tomorrow",
+                                                "${(index + 1)}. ${_con.schedules[index].name}",
                                                 style: TextStyle(
                                                     // color: Colors.blue,
                                                     fontSize: 16),
                                                 textAlign: TextAlign.start,
                                               ),
                                               Text(
-                                                " 10:00am-11:00am",
+                                                " Time: ${_con.schedules[index].timeline}",
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .caption,
@@ -284,14 +299,15 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
                                   },
                                 ),
                               ),
-                              actions: <Widget>[
-                                FlatButton(
-                                  child: Text('Close'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
+                              // actions: <Widget>[
+                              //   FlatButton(
+                              //     child: Text('Close'),
+                              //     onPressed: () {
+                              //       Navigator.of(context).pop();
+                              //       _character = SingingCharacter.ASAP;
+                              //     },
+                              //   ),
+                              // ],
                             ),
                           );
                           setState(() {

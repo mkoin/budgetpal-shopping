@@ -53,7 +53,6 @@ class _CategoryWidgetState extends StateMVC<CategoryWidget> {
       bottomNavigationBar: _con.loadCart
           ? BottomAppBar()
           : BottomAppBar(
-              color: Colors.blue,
               child: GestureDetector(
                 onTap: () {
                   if (currentUser.value.apiToken != null) {
@@ -284,5 +283,4 @@ class _CategoryWidgetState extends StateMVC<CategoryWidget> {
       ),
     );
   }
-
 }

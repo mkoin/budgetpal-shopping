@@ -11,6 +11,7 @@ class Order {
   double tax;
   double deliveryFee;
   String hint;
+  String delivery_schedule_id;
   bool active;
   DateTime dateTime;
   User user;
@@ -22,6 +23,7 @@ class Order {
   Order.fromJSON(Map<String, dynamic> jsonMap) {
     try {
       id = jsonMap['id'].toString();
+      delivery_schedule_id = jsonMap['delivery_schedule_id'].toString();
       tax = jsonMap['tax'] != null ? jsonMap['tax'].toDouble() : 0.0;
       deliveryFee = jsonMap['delivery_fee'] != null ? jsonMap['delivery_fee'].toDouble() : 0.0;
       hint = jsonMap['hint'] != null ? jsonMap['hint'].toString() : '';
@@ -34,6 +36,7 @@ class Order {
       productOrders = jsonMap['product_orders'] != null ? List.from(jsonMap['product_orders']).map((element) => ProductOrder.fromJSON(element)).toList() : [];
     } catch (e) {
       id = '';
+      delivery_schedule_id = '';
       tax = 0.0;
       deliveryFee = 0.0;
       hint = '';
@@ -51,6 +54,7 @@ class Order {
   Map toMap() {
     var map = new Map<String, dynamic>();
     map["id"] = id;
+    map["delivery_schedule_id"] = delivery_schedule_id;
     map["user_id"] = user?.id;
     map["order_status_id"] = orderStatus?.id;
     map["tax"] = tax;

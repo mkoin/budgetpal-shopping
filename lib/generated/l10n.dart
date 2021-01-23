@@ -255,7 +255,8 @@ class S {
 
   String get favorite_products {
     return Intl.message(
-      'Favorite Products',
+      'Shopping',
+      // 'Favorite Products',
       name: 'favorite_products',
       desc: '',
       args: [],
