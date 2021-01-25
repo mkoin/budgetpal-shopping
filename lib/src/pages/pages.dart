@@ -123,6 +123,7 @@ class _PagesWidgetState extends State<PagesWidget> {
               icon: Icon(Icons.location_on),
               title: new Container(height: 0.0),
             ),
+
             BottomNavigationBarItem(
               title: new Container(height: 5.0),
               icon: Container(
@@ -149,11 +150,11 @@ class _PagesWidgetState extends State<PagesWidget> {
               ),
             ),
             BottomNavigationBarItem(
-              icon: new Icon(Icons.local_mall),
+              icon: new Icon(Icons.shopping_cart),
               title: new Container(height: 0.0),
             ),
             BottomNavigationBarItem(
-              icon: new Icon(Icons.favorite),
+              icon: new Icon(Icons.shopping_basket),
               title: new Container(height: 0.0),
             ),
           ],

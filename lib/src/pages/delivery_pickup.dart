@@ -62,6 +62,12 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
       key: _con.scaffoldKey,
       bottomNavigationBar: CartBottomDetailsWidget(con: _con),
       appBar: AppBar(
+        bottom: PreferredSize(
+            child: Container(
+              color: Colors.orange,
+              height: 1.0,
+            ),
+            preferredSize: Size.fromHeight(2.0)),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
@@ -229,7 +235,7 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
                           prefs.setString('delivery_schedule_id', "1");
                           setState(() {
                             _character = value;
-                            userSchedules = "ASAP";
+                            userSchedules = "SCHEDULE";
                           });
                         },
                       ),

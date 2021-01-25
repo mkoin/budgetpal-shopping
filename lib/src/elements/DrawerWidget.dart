@@ -126,7 +126,7 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
               color: Theme.of(context).focusColor.withOpacity(1),
             ),
             title: Text(
-              S.of(context).favorite_products,
+              "Shopping",
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),

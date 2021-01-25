@@ -69,7 +69,7 @@ class _ProductGridItemWidgetState extends State<ProductGridItemWidget> {
               Center(
                 child: widget.isAddedToCart
                     ? Container(
-                        color: Colors.greenAccent,
+                        color: Colors.orangeAccent,
                         child: Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

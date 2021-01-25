@@ -59,7 +59,7 @@ class CardWidget extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 3),
-                    decoration: BoxDecoration(color: market.closed ? Colors.grey : Colors.green, borderRadius: BorderRadius.circular(24)),
+                    decoration: BoxDecoration(color: market.closed ? Colors.grey : Colors.orange, borderRadius: BorderRadius.circular(24)),
                     child: market.closed
                         ? Text(
                             S.of(context).closed,
@@ -73,7 +73,7 @@ class CardWidget extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 0, vertical: 8),
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 3),
-                    decoration: BoxDecoration(color: Helper.canDelivery(market) ? Colors.green : Colors.orange, borderRadius: BorderRadius.circular(24)),
+                    decoration: BoxDecoration(color: Helper.canDelivery(market) ? Colors.orange : Colors.orange, borderRadius: BorderRadius.circular(24)),
                     child: Helper.canDelivery(market)
                         ? Text(
                             S.of(context).delivery,

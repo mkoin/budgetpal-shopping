@@ -142,6 +142,12 @@ class _HomeWidgetState extends StateMVC<HomeWidget> {
 
     return Scaffold(
       appBar: AppBar(
+        bottom: PreferredSize(
+            child: Container(
+              color: Colors.orange,
+              height: 1.0,
+            ),
+            preferredSize: Size.fromHeight(2.0)),
         leading: new IconButton(
           icon: new Icon(Icons.sort, color: Theme.of(context).hintColor),
           onPressed: () => widget.parentScaffoldKey.currentState.openDrawer(),

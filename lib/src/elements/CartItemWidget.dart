@@ -120,6 +120,38 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                                               decoration:
                                                   TextDecoration.lineThrough)))
                                   : SizedBox(height: 0),
+                              GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) => new CupertinoAlertDialog(
+                                        title: new Text("Remove Cart"),
+                                        content: new Text(
+                                            "\nWould you like to remove item from Cart?"),
+                                        actions: <Widget>[
+                                          FlatButton(
+                                            child: Text('No'),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          FlatButton(
+                                            child: Text('Yes'),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                              setState(() {
+                                                widget.onDismissed();
+                                              });
+                                            },
+                                          )
+                                        ],
+                                      ));
+                                },
+                                child: Icon(
+                                  Icons.delete_forever,
+                                  color: Colors.red,
+                                ),
+                              ),
                             ],
                           ),
                           //Helper.getPrice(widget.cart.getProductPrice(), context, style: Theme.of(context).textTheme.headline4)
@@ -127,22 +159,9 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                       ),
                     ),
                     SizedBox(width: 8),
-                    Column(
+                    Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              widget.increment();
-                            });
-                          },
-                          iconSize: 30,
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          icon: Icon(Icons.add_circle_outline),
-                          color: Theme.of(context).hintColor,
-                        ),
-                        Text(widget.cart.quantity.toString(),
-                            style: Theme.of(context).textTheme.subtitle1),
                         IconButton(
                           onPressed: () {
                             setState(() {
@@ -154,36 +173,18 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                           icon: Icon(Icons.remove_circle_outline),
                           color: Theme.of(context).hintColor,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (_) => new CupertinoAlertDialog(
-                                  title: new Text("Remove Cart"),
-                                  content: new Text("\nWould you like to remove item from Cart?"),
-                                  actions: <Widget>[
-                                    FlatButton(
-                                      child: Text('No'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                    FlatButton(
-                                      child: Text('Yes'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                        setState(() {
-                                          widget.onDismissed();
-                                        });
-                                      },
-                                    )
-                                  ],
-                                ));
+                        Text(widget.cart.quantity.toString(),
+                            style: Theme.of(context).textTheme.subtitle1),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              widget.increment();
+                            });
                           },
-                          child: Icon(
-                            Icons.delete_forever,
-                            color: Colors.red,
-                          ),
+                          iconSize: 30,
+                          padding: EdgeInsets.symmetric(horizontal: 5),
+                          icon: Icon(Icons.add_circle_outline),
+                          color: Theme.of(context).hintColor,
                         ),
                       ],
                     ),

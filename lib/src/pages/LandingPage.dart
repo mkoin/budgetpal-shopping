@@ -81,16 +81,19 @@ class _LandingPageWidgetState extends StateMVC<LandingPageWidget> {
                   children: [
                     Column(
                       children: <Widget>[
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.location_on,
-                              color: Colors.red,
-                            ),
-                            Text(
-                              "${userAddress}",
-                            )
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.only(left: 18, right: 10),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.location_on,
+                                color: Colors.red,
+                              ),
+                              Text(
+                                "${userAddress}",
+                              )
+                            ],
+                          ),
                         ),
                         Padding(
                           padding:
@@ -119,7 +122,7 @@ class _LandingPageWidgetState extends StateMVC<LandingPageWidget> {
                           ),
                         ),
                         Container(
-                          height: 235,
+                          height: 230,
                           child: ListView.separated(
                             physics: const AlwaysScrollableScrollPhysics(),
                             padding: EdgeInsets.symmetric(vertical: 15),

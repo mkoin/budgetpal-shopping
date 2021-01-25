@@ -35,6 +35,12 @@ class _DebugWidgetState extends StateMVC<DebugWidget> {
     return Scaffold(
         key: _con.scaffoldKey,
         appBar: AppBar(
+          bottom: PreferredSize(
+              child: Container(
+                color: Colors.orange,
+                height: 1.0,
+              ),
+              preferredSize: Size.fromHeight(2.0)),
           backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,

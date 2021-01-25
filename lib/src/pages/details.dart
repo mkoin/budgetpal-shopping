@@ -139,7 +139,7 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                                   SizedBox(width: 20),
                                   Container(
                                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 3),
-                                    decoration: BoxDecoration(color: _con.market.closed ? Colors.grey : Colors.green, borderRadius: BorderRadius.circular(24)),
+                                    decoration: BoxDecoration(color: _con.market.closed ? Colors.grey : Colors.orange, borderRadius: BorderRadius.circular(24)),
                                     child: _con.market.closed
                                         ? Text(
                                             S.of(context).closed,
@@ -154,7 +154,7 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                                   Container(
                                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 3),
                                     decoration: BoxDecoration(
-                                        color: Helper.canDelivery(_con.market) ? Colors.green : Colors.orange, borderRadius: BorderRadius.circular(24)),
+                                        color: Helper.canDelivery(_con.market) ? Colors.orange : Colors.orange, borderRadius: BorderRadius.circular(24)),
                                     child: Helper.canDelivery(_con.market)
                                         ? Text(
                                             S.of(context).delivery,
@@ -169,7 +169,7 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                                   Container(
                                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 3),
                                     decoration: BoxDecoration(
-                                        color: Helper.canDelivery(_con.market) ? Colors.green : Colors.grey, borderRadius: BorderRadius.circular(24)),
+                                        color: Helper.canDelivery(_con.market) ? Colors.orange : Colors.grey, borderRadius: BorderRadius.circular(24)),
                                     child: Text(
                                       Helper.getDistance(_con.market.distance, Helper.of(context).trans(setting.value.distanceUnit)),
                                       style: Theme.of(context).textTheme.caption.merge(TextStyle(color: Theme.of(context).primaryColor)),

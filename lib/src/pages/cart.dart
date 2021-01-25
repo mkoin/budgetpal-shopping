@@ -50,6 +50,12 @@ class _CartWidgetState extends StateMVC<CartWidget> {
         bottomNavigationBar: CartBottomDetailsWidget(con: _con),
         appBar: AppBar(
           automaticallyImplyLeading: false,
+          bottom: PreferredSize(
+              child: Container(
+                color: Colors.orange,
+                height: 1.0,
+              ),
+              preferredSize: Size.fromHeight(2.0)),
           leading: IconButton(
             onPressed: () {
               Navigator.of(context)
@@ -78,16 +84,19 @@ class _CartWidgetState extends StateMVC<CartWidget> {
                   children: [
                     Column(
                       children: <Widget>[
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.location_on,
-                              color: Colors.red,
-                            ),
-                            Text(
-                              userAddress,
-                            )
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20, right: 10),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.location_on,
+                                color: Colors.red,
+                              ),
+                              Text(
+                                "$userAddress",
+                              )
+                            ],
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 20, right: 10),
@@ -114,7 +123,7 @@ class _CartWidgetState extends StateMVC<CartWidget> {
                           ),
                         ),
                         Container(
-                          height: 290,
+                          height: 288,
                           child: ListView.separated(
                             physics: const AlwaysScrollableScrollPhysics(),
                             padding: EdgeInsets.symmetric(vertical: 15),

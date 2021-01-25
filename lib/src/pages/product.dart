@@ -133,7 +133,7 @@ class _ProductWidgetState extends StateMVC<ProductWidget> {
                                     Container(
                                       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 3),
                                       decoration: BoxDecoration(
-                                          color: Helper.canDelivery(_con.product.market) && _con.product.deliverable ? Colors.green : Colors.orange,
+                                          color: Helper.canDelivery(_con.product.market) && _con.product.deliverable ? Colors.orange : Colors.orange,
                                           borderRadius: BorderRadius.circular(24)),
                                       child: Helper.canDelivery(_con.product.market) && _con.product.deliverable
                                           ? Text(

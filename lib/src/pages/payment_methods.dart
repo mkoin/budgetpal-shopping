@@ -69,6 +69,12 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
       });
     return Scaffold(
       appBar: AppBar(
+        bottom: PreferredSize(
+            child: Container(
+              color: Colors.orange,
+              height: 1.0,
+            ),
+            preferredSize: Size.fromHeight(2.0)),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
@@ -198,7 +204,7 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
                                     overflow: TextOverflow.fade,
                                     softWrap: false,
                                     style: TextStyle(
-                                        color: Colors.green, fontSize: 12),
+                                        color: Colors.orange, fontSize: 12),
                                   ),
                                 ],
                               ),
@@ -220,11 +226,11 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
                         children: [
                           Icon(
                             Icons.check,
-                            color: Colors.green,
+                            color: Colors.orange,
                           ),
                           Text(
                             "Proceed to Make a Payment Of Ksh.$_subTotal",
-                            style: TextStyle(color: Colors.green),
+                            style: TextStyle(color: Colors.orange),
                           )
                         ],
                       ),
@@ -403,7 +409,7 @@ class _PaymentMethodsWidgetState extends State<PaymentMethodsWidget> {
                     child: Container(
                       height: 50,
                       decoration: new BoxDecoration(
-                        color: Colors.green,
+                        color: Colors.orange,
                         border: Border.all(color: Colors.white, width: 0.0),
                         borderRadius:
                             new BorderRadius.all(Radius.elliptical(50, 50)),

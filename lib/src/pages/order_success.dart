@@ -54,6 +54,12 @@ class _OrderSuccessWidgetState extends StateMVC<OrderSuccessWidget> {
     return Scaffold(
         key: _con.scaffoldKey,
         appBar: AppBar(
+          bottom: PreferredSize(
+              child: Container(
+                color: Colors.orange,
+                height: 1.0,
+              ),
+              preferredSize: Size.fromHeight(2.0)),
           automaticallyImplyLeading: false,
           leading: IconButton(
             onPressed: () {
@@ -96,8 +102,8 @@ class _OrderSuccessWidgetState extends StateMVC<OrderSuccessWidget> {
                                       begin: Alignment.bottomLeft,
                                       end: Alignment.topRight,
                                       colors: [
-                                        Colors.green.withOpacity(1),
-                                        Colors.green.withOpacity(0.2),
+                                        Colors.orange.withOpacity(1),
+                                        Colors.orange.withOpacity(0.2),
                                       ])),
                               child: _con.loading
                                   ? Padding(

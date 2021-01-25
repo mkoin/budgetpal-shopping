@@ -206,7 +206,7 @@ class _VouchersPageState extends State<VouchersPage> {
                                 ),
                               ),
                               labelText: 'Receiver Phone Number',
-                              labelStyle: TextStyle(color: Colors.green)),
+                              labelStyle: TextStyle(color: Colors.orange)),
                         ),
                         TextField(
                           controller: amountController,
@@ -226,7 +226,7 @@ class _VouchersPageState extends State<VouchersPage> {
                                 ),
                               ),
                               labelText: 'Amount',
-                              labelStyle: TextStyle(color: Colors.green)),
+                              labelStyle: TextStyle(color: Colors.orange)),
                         ),
                         TextField(
                           controller: dailyLimitController,
@@ -246,7 +246,7 @@ class _VouchersPageState extends State<VouchersPage> {
                                 ),
                               ),
                               labelText: 'Daily Amount(Optional)',
-                              labelStyle: TextStyle(color: Colors.green)),
+                              labelStyle: TextStyle(color: Colors.orange)),
                         ),
                         TextField(
                           controller: monthLimitController,
@@ -266,7 +266,7 @@ class _VouchersPageState extends State<VouchersPage> {
                                 ),
                               ),
                               labelText: 'Monthly Amount(Optional)',
-                              labelStyle: TextStyle(color: Colors.green)),
+                              labelStyle: TextStyle(color: Colors.orange)),
                         ),
                         SizedBox(
                           height: 20,

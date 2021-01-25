@@ -43,17 +43,12 @@ class _DeliveryAddressBottomSheetWidgetState
     return Container(
       height: 350,
       decoration: BoxDecoration(
-        color: Theme
-            .of(context)
-            .primaryColor,
+        color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.only(
             topRight: Radius.circular(20), topLeft: Radius.circular(20)),
         boxShadow: [
           BoxShadow(
-              color: Theme
-                  .of(context)
-                  .focusColor
-                  .withOpacity(0.4),
+              color: Theme.of(context).focusColor.withOpacity(0.4),
               blurRadius: 30,
               offset: Offset(0, -30)),
         ],
@@ -64,7 +59,7 @@ class _DeliveryAddressBottomSheetWidgetState
             padding: const EdgeInsets.only(top: 30),
             child: ListView(
               padding:
-              EdgeInsets.only(top: 20, bottom: 15, left: 20, right: 20),
+                  EdgeInsets.only(top: 20, bottom: 15, left: 20, right: 20),
               children: <Widget>[
                 InkWell(
                   onTap: () async {
@@ -96,14 +91,10 @@ class _DeliveryAddressBottomSheetWidgetState
                         width: 36,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(5)),
-                            color: Theme
-                                .of(context)
-                                .focusColor),
+                            color: Theme.of(context).focusColor),
                         child: Icon(
                           Icons.add_circle_outline,
-                          color: Theme
-                              .of(context)
-                              .primaryColor,
+                          color: Theme.of(context).primaryColor,
                           size: 22,
                         ),
                       ),
@@ -117,16 +108,11 @@ class _DeliveryAddressBottomSheetWidgetState
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    S
-                                        .of(context)
-                                        .add_new_delivery_address,
+                                    S.of(context).add_new_delivery_address,
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                     style:
-                                    Theme
-                                        .of(context)
-                                        .textTheme
-                                        .bodyText2,
+                                        Theme.of(context).textTheme.bodyText2,
                                   ),
                                 ],
                               ),
@@ -134,9 +120,7 @@ class _DeliveryAddressBottomSheetWidgetState
                             SizedBox(width: 8),
                             Icon(
                               Icons.keyboard_arrow_right,
-                              color: Theme
-                                  .of(context)
-                                  .focusColor,
+                              color: Theme.of(context).focusColor,
                             ),
                           ],
                         ),
@@ -240,54 +224,52 @@ class _DeliveryAddressBottomSheetWidgetState
                       onTap: () {
                         showDialog(
                             context: context,
-                            builder: (_) =>
-                            new CupertinoAlertDialog(
-                              title: new Text("Confirmation"),
-                              content: Column(
-                                children: [
-                                  Text(
-                                      "\nSave ${_con.addresses
-                                          .elementAt(index)
-                                          .address} as your delivery address?\n"),
-                                  Card(
-                                    color: Colors.transparent,
-                                    child: TextFormField(
-                                      style: TextStyle(fontSize: 18, color: Colors.white),
-                                      decoration: InputDecoration(
-                                        labelText:
-                                        "Extra information (optional)", //prefixIcon
-//                                    border: OutlineInputBorder(),
-                                      ),
-                                      controller: myController,
-                                    ),
+                            builder: (_) => new CupertinoAlertDialog(
+                                  title: new Text("Confirmation"),
+                                  content: Column(
+                                    children: [
+                                      Text(
+                                          "\nSave ${_con.addresses.elementAt(index).address} as your delivery address?\n"),
+//                                   Card(
+//                                     color: Colors.transparent,
+//                                     child: TextFormField(
+//                                       style: TextStyle(fontSize: 18, color: Colors.white),
+//                                       decoration: InputDecoration(
+//                                         labelText:
+//                                         "Extra information (optional)", //prefixIcon
+// //                                    border: OutlineInputBorder(),
+//                                       ),
+//                                       controller: myController,
+//                                     ),
+//                                   ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              actions: <Widget>[
-                                FlatButton(
-                                  child: Text('No'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                                FlatButton(
-                                  child: Text('Okay'),
-                                  onPressed: () {
-                                    _getLocationState("${_con.addresses.elementAt(index).address} ${myController.text}");
-                                    Navigator.of(context).pop();
-                                    _con
-                                        .changeDeliveryAddress(
-                                        _con.addresses.elementAt(index))
-                                        .then((value) {
-                                      Navigator.of(widget
-                                          .scaffoldKey.currentContext)
-                                          .pop();
-                                    });
-                                    // Navigator.of(widget.scaffoldKey.currentContext).pop();
-                                  },
-                                )
-                              ],
-                            ));
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      child: Text('No'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    FlatButton(
+                                      child: Text('Okay'),
+                                      onPressed: () {
+                                        _getLocationState(
+                                            "${_con.addresses.elementAt(index).address} ${myController.text}");
+                                        Navigator.of(context).pop();
+                                        _con
+                                            .changeDeliveryAddress(
+                                                _con.addresses.elementAt(index))
+                                            .then((value) {
+                                          Navigator.of(widget
+                                                  .scaffoldKey.currentContext)
+                                              .pop();
+                                        });
+                                        // Navigator.of(widget.scaffoldKey.currentContext).pop();
+                                      },
+                                    )
+                                  ],
+                                ));
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -297,15 +279,11 @@ class _DeliveryAddressBottomSheetWidgetState
                             width: 36,
                             decoration: BoxDecoration(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(5)),
-                                color: Theme
-                                    .of(context)
-                                    .focusColor),
+                                    BorderRadius.all(Radius.circular(5)),
+                                color: Theme.of(context).focusColor),
                             child: Icon(
                               Icons.place,
-                              color: Theme
-                                  .of(context)
-                                  .primaryColor,
+                              color: Theme.of(context).primaryColor,
                               size: 22,
                             ),
                           ),
@@ -317,16 +295,13 @@ class _DeliveryAddressBottomSheetWidgetState
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        _con.addresses
-                                            .elementAt(index)
-                                            .address,
+                                        _con.addresses.elementAt(index).address,
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 3,
-                                        style: Theme
-                                            .of(context)
+                                        style: Theme.of(context)
                                             .textTheme
                                             .bodyText2,
                                       ),
@@ -336,9 +311,7 @@ class _DeliveryAddressBottomSheetWidgetState
                                 SizedBox(width: 8),
                                 Icon(
                                   Icons.keyboard_arrow_right,
-                                  color: Theme
-                                      .of(context)
-                                      .focusColor,
+                                  color: Theme.of(context).focusColor,
                                 ),
                               ],
                             ),
@@ -357,20 +330,14 @@ class _DeliveryAddressBottomSheetWidgetState
             padding: EdgeInsets.symmetric(
                 vertical: 13, horizontal: config.App(context).appWidth(42)),
             decoration: BoxDecoration(
-              color: Theme
-                  .of(context)
-                  .focusColor
-                  .withOpacity(0.05),
+              color: Theme.of(context).focusColor.withOpacity(0.05),
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(20), topLeft: Radius.circular(20)),
             ),
             child: Container(
               width: 30,
               decoration: BoxDecoration(
-                color: Theme
-                    .of(context)
-                    .focusColor
-                    .withOpacity(0.8),
+                color: Theme.of(context).focusColor.withOpacity(0.8),
                 borderRadius: BorderRadius.circular(3),
               ),
               //child: SizedBox(height: 1,),

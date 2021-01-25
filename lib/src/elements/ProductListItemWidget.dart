@@ -94,7 +94,7 @@ class _ProductListItemWidgetState extends State<ProductListItemWidget> {
                           style: Theme.of(context).textTheme.headline4),
                       widget.isAddedToCart
                           ? Container(
-                              color: Colors.greenAccent,
+                              color: Colors.orangeAccent,
                               child: Center(
                                 child: Row(
                                   mainAxisAlignment:

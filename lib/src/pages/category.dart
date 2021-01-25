@@ -75,6 +75,12 @@ class _CategoryWidgetState extends StateMVC<CategoryWidget> {
             arguments: RouteArgument(id: widget.routeArgument.id));
       }),
       appBar: AppBar(
+        bottom: PreferredSize(
+            child: Container(
+              color: Colors.orange,
+              height: 1.0,
+            ),
+            preferredSize: Size.fromHeight(2.0)),
         leading: new IconButton(
           icon: new Icon(Icons.sort, color: Theme.of(context).hintColor),
           onPressed: () => _con.scaffoldKey?.currentState?.openDrawer(),
