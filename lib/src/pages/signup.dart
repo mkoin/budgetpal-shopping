@@ -109,184 +109,185 @@ class _SignUpWidgetState extends StateMVC<SignUpWidget> {
                 padding: EdgeInsets.symmetric(vertical: 50, horizontal: 27),
                 width: config.App(context).appWidth(88),
 //              height: config.App(context).appHeight(55),
-                child: _loginUiState
-                    ? Form(
-                        key: _con.loginFormKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            TextFormField(
-                              keyboardType: TextInputType.text,
-                              onSaved: (input) => _con.user.name = input,
-                              validator: (input) => input.length < 3
-                                  ? S.of(context).should_be_more_than_3_letters
-                                  : null,
-                              decoration: InputDecoration(
-                                labelText: S.of(context).full_name,
-                                labelStyle: TextStyle(
-                                    color: Theme.of(context).accentColor),
-                                contentPadding: EdgeInsets.all(12),
-                                hintText: S.of(context).john_doe,
-                                hintStyle: TextStyle(
-                                    color: Theme.of(context)
-                                        .focusColor
-                                        .withOpacity(0.7)),
-                                prefixIcon: Icon(Icons.person_outline,
-                                    color: Theme.of(context).accentColor),
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context)
-                                            .focusColor
-                                            .withOpacity(0.2))),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context)
-                                            .focusColor
-                                            .withOpacity(0.5))),
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context)
-                                            .focusColor
-                                            .withOpacity(0.2))),
-                              ),
+                child: Stack(
+                  children: <Widget>[
+                    Form(
+                      key: _con.loginFormKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          TextFormField(
+                            keyboardType: TextInputType.text,
+                            onSaved: (input) => _con.user.name = input,
+                            validator: (input) => input.length < 3
+                                ? S.of(context).should_be_more_than_3_letters
+                                : null,
+                            decoration: InputDecoration(
+                              labelText: S.of(context).full_name,
+                              labelStyle: TextStyle(
+                                  color: Theme.of(context).accentColor),
+                              contentPadding: EdgeInsets.all(12),
+                              hintText: S.of(context).john_doe,
+                              hintStyle: TextStyle(
+                                  color: Theme.of(context)
+                                      .focusColor
+                                      .withOpacity(0.7)),
+                              prefixIcon: Icon(Icons.person_outline,
+                                  color: Theme.of(context).accentColor),
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .focusColor
+                                          .withOpacity(0.2))),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .focusColor
+                                          .withOpacity(0.5))),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .focusColor
+                                          .withOpacity(0.2))),
                             ),
-                            SizedBox(height: 30),
-                            TextFormField(
-                              controller: _phoneNumberController,
-                              keyboardType: TextInputType.number,
-                              onSaved: (input) => _con.user.phone = input,
-                              validator: (input) => input.length < 9
-                                  ? "Enter a valid Phone number"
-                                  : null,
-                              decoration: InputDecoration(
-                                labelText: "Phone Number",
-                                labelStyle: TextStyle(
-                                    color: Theme.of(context).accentColor),
-                                contentPadding: EdgeInsets.all(12),
-                                hintText: "0700 000 000",
-                                hintStyle: TextStyle(
-                                    color: Theme.of(context)
-                                        .focusColor
-                                        .withOpacity(0.7)),
-                                prefixIcon: Icon(Icons.phone,
-                                    color: Theme.of(context).accentColor),
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context)
-                                            .focusColor
-                                            .withOpacity(0.2))),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context)
-                                            .focusColor
-                                            .withOpacity(0.5))),
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context)
-                                            .focusColor
-                                            .withOpacity(0.2))),
-                              ),
+                          ),
+                          SizedBox(height: 30),
+                          TextFormField(
+                            controller: _phoneNumberController,
+                            keyboardType: TextInputType.number,
+                            onSaved: (input) => _con.user.phone = input,
+                            validator: (input) => input.length < 9
+                                ? "Enter a valid Phone number"
+                                : null,
+                            decoration: InputDecoration(
+                              labelText: "Phone Number",
+                              labelStyle: TextStyle(
+                                  color: Theme.of(context).accentColor),
+                              contentPadding: EdgeInsets.all(12),
+                              hintText: "0700 000 000",
+                              hintStyle: TextStyle(
+                                  color: Theme.of(context)
+                                      .focusColor
+                                      .withOpacity(0.7)),
+                              prefixIcon: Icon(Icons.phone,
+                                  color: Theme.of(context).accentColor),
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .focusColor
+                                          .withOpacity(0.2))),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .focusColor
+                                          .withOpacity(0.5))),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .focusColor
+                                          .withOpacity(0.2))),
                             ),
-                            SizedBox(height: 30),
-                            TextFormField(
-                              keyboardType: TextInputType.emailAddress,
-                              onSaved: (input) => _con.user.email = input,
-                              validator: (input) => !input.contains('@')
-                                  ? S.of(context).should_be_a_valid_email
-                                  : null,
-                              decoration: InputDecoration(
-                                labelText: S.of(context).email,
-                                labelStyle: TextStyle(
-                                    color: Theme.of(context).accentColor),
-                                contentPadding: EdgeInsets.all(12),
-                                hintText: 'johndoe@gmail.com',
-                                hintStyle: TextStyle(
-                                    color: Theme.of(context)
-                                        .focusColor
-                                        .withOpacity(0.7)),
-                                prefixIcon: Icon(Icons.alternate_email,
-                                    color: Theme.of(context).accentColor),
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context)
-                                            .focusColor
-                                            .withOpacity(0.2))),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context)
-                                            .focusColor
-                                            .withOpacity(0.5))),
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context)
-                                            .focusColor
-                                            .withOpacity(0.2))),
-                              ),
+                          ),
+                          SizedBox(height: 30),
+                          TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            onSaved: (input) => _con.user.email = input,
+                            validator: (input) => !input.contains('@')
+                                ? S.of(context).should_be_a_valid_email
+                                : null,
+                            decoration: InputDecoration(
+                              labelText: S.of(context).email,
+                              labelStyle: TextStyle(
+                                  color: Theme.of(context).accentColor),
+                              contentPadding: EdgeInsets.all(12),
+                              hintText: 'johndoe@gmail.com',
+                              hintStyle: TextStyle(
+                                  color: Theme.of(context)
+                                      .focusColor
+                                      .withOpacity(0.7)),
+                              prefixIcon: Icon(Icons.alternate_email,
+                                  color: Theme.of(context).accentColor),
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .focusColor
+                                          .withOpacity(0.2))),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .focusColor
+                                          .withOpacity(0.5))),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .focusColor
+                                          .withOpacity(0.2))),
                             ),
-                            SizedBox(height: 30),
-                            TextFormField(
-                              obscureText: _con.hidePassword,
-                              onSaved: (input) => _con.user.password = input,
-                              validator: (input) => input.length < 6
-                                  ? S.of(context).should_be_more_than_6_letters
-                                  : null,
-                              decoration: InputDecoration(
-                                labelText: S.of(context).password,
-                                labelStyle: TextStyle(
-                                    color: Theme.of(context).accentColor),
-                                contentPadding: EdgeInsets.all(12),
-                                hintText: '••••••••••••',
-                                hintStyle: TextStyle(
-                                    color: Theme.of(context)
-                                        .focusColor
-                                        .withOpacity(0.7)),
-                                prefixIcon: Icon(Icons.lock_outline,
-                                    color: Theme.of(context).accentColor),
-                                suffixIcon: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _con.hidePassword = !_con.hidePassword;
-                                    });
-                                  },
-                                  color: Theme.of(context).focusColor,
-                                  icon: Icon(_con.hidePassword
-                                      ? Icons.visibility
-                                      : Icons.visibility_off),
-                                ),
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context)
-                                            .focusColor
-                                            .withOpacity(0.2))),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context)
-                                            .focusColor
-                                            .withOpacity(0.5))),
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context)
-                                            .focusColor
-                                            .withOpacity(0.2))),
+                          ),
+                          SizedBox(height: 30),
+                          TextFormField(
+                            obscureText: _con.hidePassword,
+                            onSaved: (input) => _con.user.password = input,
+                            validator: (input) => input.length < 6
+                                ? S.of(context).should_be_more_than_6_letters
+                                : null,
+                            decoration: InputDecoration(
+                              labelText: S.of(context).password,
+                              labelStyle: TextStyle(
+                                  color: Theme.of(context).accentColor),
+                              contentPadding: EdgeInsets.all(12),
+                              hintText: '••••••••••••',
+                              hintStyle: TextStyle(
+                                  color: Theme.of(context)
+                                      .focusColor
+                                      .withOpacity(0.7)),
+                              prefixIcon: Icon(Icons.lock_outline,
+                                  color: Theme.of(context).accentColor),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _con.hidePassword = !_con.hidePassword;
+                                  });
+                                },
+                                color: Theme.of(context).focusColor,
+                                icon: Icon(_con.hidePassword
+                                    ? Icons.visibility
+                                    : Icons.visibility_off),
                               ),
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .focusColor
+                                          .withOpacity(0.2))),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .focusColor
+                                          .withOpacity(0.5))),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Theme.of(context)
+                                          .focusColor
+                                          .withOpacity(0.2))),
                             ),
-                            SizedBox(height: 30),
-                            BlockButtonWidget(
-                              text: Text(
-                                S.of(context).register,
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor),
-                              ),
-                              color: Theme.of(context).accentColor,
-                              onPressed: () {
-                                _con.user.address = "Not Set";
-                                _con.user.bio = "Not Set";
-                                // _con.register();
-                                _submitPhoneNumber();
-                              },
+                          ),
+                          SizedBox(height: 30),
+                          BlockButtonWidget(
+                            text: Text(
+                              S.of(context).register,
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor),
                             ),
-                            SizedBox(height: 25),
+                            color: Theme.of(context).accentColor,
+                            onPressed: () {
+                              _con.user.address = "Not Set";
+                              _con.user.bio = "Not Set";
+                              // _con.register();
+                              _submitPhoneNumber();
+                            },
+                          ),
+                          SizedBox(height: 25),
 //                      FlatButton(
 //                        onPressed: () {
 //                          Navigator.of(context).pushNamed('/MobileVerification');
@@ -302,124 +303,135 @@ class _SignUpWidgetState extends StateMVC<SignUpWidget> {
 //                          ),
 //                        ),
 //                      ),
-                          ],
-                        ),
-                      )
-                    : Form(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            CustomText(
-                                text: "Verify your number",
-                                size: 24,
-                                weight: FontWeight.bold),
-                            SizedBox(height: 20),
-                            Text(
-                              "To complete your phone number verification, \nplease enter the 6-digit activation code.",
-                              textAlign: TextAlign.center,
-                            ),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(30, 30, 30, 10),
-                              child: TextFormField(
-                                controller: _otpController,
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'Enter code';
-                                  }
-                                  return null;
-                                },
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(10),
-                                  labelText: "Enter code", //prefixIcon
-                                  border: OutlineInputBorder(),
-                                ),
+                        ],
+                      ),
+                    ),
+                    Visibility(
+                      visible: !_loginUiState,
+                      child: Container(
+                        color: Colors.white,
+                        width: MediaQuery.of(context).size.width,
+                        child: Form(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              CustomText(
+                                  text: "Verify your number",
+                                  size: 24,
+                                  weight: FontWeight.bold),
+                              SizedBox(height: 20),
+                              Text(
+                                "To complete your phone number verification, \nplease enter the 6-digit activation code.",
+                                textAlign: TextAlign.center,
                               ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 16.0),
-                              child: ButtonTheme(
-                                minWidth: 200.0,
-                                height: 40.0,
-                                child: RaisedButton(
-                                  color: Colors.blue,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(18.0),
-                                      side: BorderSide(color: Colors.blue)),
-                                  textColor: Colors.white,
-                                  onPressed: () async {
-                                    // Validate returns true if the form is valid, or false
-                                    pr = new ProgressDialog(context,
-                                        type: ProgressDialogType.Normal,
-                                        isDismissible: true);
-                                    pr.style(message: 'Please wait ...');
-                                    pr.show();
-                                    try {
-                                      final result =
-                                          await InternetAddress.lookup(
-                                              'google.com');
-                                      pr.hide();
-                                      if (result.isNotEmpty &&
-                                          result[0].rawAddress.isNotEmpty) {
-                                        _submitOTP();
-                                      } else {
-                                        _noInternetShowDialog();
-                                        return false;
-                                      }
-                                    } on SocketException catch (_) {
-                                      _noInternetShowDialog();
-                                      print('not connected');
-                                      return false;
+                              Container(
+                                padding: EdgeInsets.fromLTRB(30, 30, 30, 10),
+                                child: TextFormField(
+                                  controller: _otpController,
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'Enter code';
                                     }
+                                    return null;
                                   },
-                                  child: Text(
-                                    'Verify',
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.all(10),
+                                    labelText: "Enter code", //prefixIcon
+                                    border: OutlineInputBorder(),
                                   ),
                                 ),
                               ),
-                            ),
-                            Text(
-                              _status,
-                              style: TextStyle(fontSize: 15, color: Colors.red),
-                            ),
-                            GestureDetector(
-                              onTap: () => setState(() {
-                                if (_start < 1) {
-                                  _submitPhoneNumber();
-                                }
-                              }),
-                              child: _loginUiState
-                                  ? Text("")
-                                  : Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text('resend code? '),
-                                        Text(
-                                          '$_countDownStatus',
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.green),
-                                        )
-                                      ],
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16.0),
+                                child: ButtonTheme(
+                                  minWidth: 200.0,
+                                  height: 40.0,
+                                  child: RaisedButton(
+                                    color: Colors.blue,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(18.0),
+                                        side: BorderSide(color: Colors.blue)),
+                                    textColor: Colors.white,
+                                    onPressed: () async {
+                                      // Validate returns true if the form is valid, or false
+                                      pr = new ProgressDialog(context,
+                                          type: ProgressDialogType.Normal,
+                                          isDismissible: true);
+                                      pr.style(message: 'Please wait ...');
+                                      pr.show();
+                                      try {
+                                        final result =
+                                            await InternetAddress.lookup(
+                                                'google.com');
+                                        pr.hide();
+                                        if (result.isNotEmpty &&
+                                            result[0].rawAddress.isNotEmpty) {
+                                          _submitOTP();
+                                        } else {
+                                          _noInternetShowDialog();
+                                          return false;
+                                        }
+                                      } on SocketException catch (_) {
+                                        _noInternetShowDialog();
+                                        print('not connected');
+                                        return false;
+                                      }
+                                    },
+                                    child: Text(
+                                      'Verify',
                                     ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _loginUiState = true;
-                                });
-                              },
-                              child: Text("Back"),
-                            ),
-                          ],
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                _status,
+                                style:
+                                    TextStyle(fontSize: 15, color: Colors.red),
+                              ),
+                              GestureDetector(
+                                onTap: () => setState(() {
+                                  if (_start < 1) {
+                                    _submitPhoneNumber();
+                                  }
+                                }),
+                                child: _loginUiState
+                                    ? Text("")
+                                    : Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Text('resend code? '),
+                                          Text(
+                                            '$_countDownStatus',
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.green),
+                                          )
+                                        ],
+                                      ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _loginUiState = true;
+                                  });
+                                },
+                                child: Text("Back"),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
+                    )
+                  ],
+                ),
               ),
             ),
             Positioned(
@@ -440,8 +452,7 @@ class _SignUpWidgetState extends StateMVC<SignUpWidget> {
 
   Future<void> _submitPhoneNumber() async {
     pr = new ProgressDialog(context,
-        type: ProgressDialogType.Normal,
-        isDismissible: true);
+        type: ProgressDialogType.Normal, isDismissible: true);
     pr.style(message: 'Please wait ...');
     pr.show();
     setState(() {
@@ -525,6 +536,7 @@ class _SignUpWidgetState extends StateMVC<SignUpWidget> {
         verificationId: this._verificationId, smsCode: smsCode);
     _login();
   }
+
   Future<void> _login() async {
     /// This method is used to login the user
     /// `AuthCredential`(`_phoneAuthCredential`) is needed for the signIn method
@@ -546,6 +558,7 @@ class _SignUpWidgetState extends StateMVC<SignUpWidget> {
       // print(e.toString());
     }
   }
+
   //INTERNET CHECK
   void _noInternetShowDialog() {
     showDialog(
