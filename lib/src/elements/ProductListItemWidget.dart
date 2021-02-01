@@ -76,7 +76,15 @@ class _ProductListItemWidgetState extends State<ProductListItemWidget> {
                           widget.product.name,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: TextStyle(
+                            fontSize: 15
+                          ),
+                          // style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                        Text(
+                          "${widget.product.capacity}${widget.product.unit}",
+                          style: Theme.of(context).textTheme.caption,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         Text(
                           widget.product.market.name,
@@ -91,7 +99,7 @@ class _ProductListItemWidgetState extends State<ProductListItemWidget> {
                   Column(
                     children: [
                       Helper.getPrice(widget.product.price, context,
-                          style: Theme.of(context).textTheme.headline4),
+                          style: Theme.of(context).textTheme.bodyText1),
                       widget.isAddedToCart
                           ? Container(
                               color: Colors.orangeAccent,
@@ -103,7 +111,7 @@ class _ProductListItemWidgetState extends State<ProductListItemWidget> {
                                     GestureDetector(
                                       onTap: () {
                                         setState(() {
-                                          if(widget.quantity>0){
+                                          if (widget.quantity > 0) {
                                             widget.quantity -= 1;
                                           }
                                         });

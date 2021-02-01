@@ -49,6 +49,11 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
   Future<void> _locationScreenToShow() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userAddress = prefs.getString('locationName');
+    Future.delayed(const Duration(seconds: 2), () {
+      if (_con.deliveryAddress.id != null || _con.deliveryAddress.id != 'null') {
+        _con.toggleDelivery();
+      }
+    });
   }
 
   @override

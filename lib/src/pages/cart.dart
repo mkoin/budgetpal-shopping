@@ -110,7 +110,7 @@ class _CartWidgetState extends StateMVC<CartWidget> {
                               S.of(context).shopping_cart,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.headline4,
+                              style: Theme.of(context).textTheme.bodyText1,
                             ),
                             subtitle: Text(
                               S

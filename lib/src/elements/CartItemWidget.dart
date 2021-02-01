@@ -89,7 +89,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                             widget.cart.product.name,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
-                            style: Theme.of(context).textTheme.subtitle1,
+                            style: Theme.of(context).textTheme.bodyText1,
                           ),
                           Wrap(
                             children: List.generate(widget.cart.options.length,
@@ -107,7 +107,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                             children: <Widget>[
                               Helper.getPrice(
                                   widget.cart.product.price, context,
-                                  style: Theme.of(context).textTheme.headline4,
+                                  style: Theme.of(context).textTheme.caption,
                                   zeroPlaceholder: 'Free'),
                               widget.cart.product.discountPrice > 0
                                   ? Helper.getPrice(
@@ -115,7 +115,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                                       context,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodyText1
+                                          .caption
                                           .merge(TextStyle(
                                               decoration:
                                                   TextDecoration.lineThrough)))

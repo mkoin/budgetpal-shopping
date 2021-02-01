@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:markets/src/controllers/delivery_pickup_controller.dart';
+import 'package:markets/src/models/address.dart';
 
 import '../../generated/l10n.dart';
 import '../models/address.dart' as model;
@@ -13,7 +15,14 @@ class DeliveryAddressesItemWidget extends StatelessWidget {
   ValueChanged<model.Address> onLongPress;
   ValueChanged<model.Address> onDismissed;
 
-  DeliveryAddressesItemWidget({Key key, this.address, this.onPressed, this.onLongPress, this.onDismissed, this.paymentMethod}) : super(key: key);
+  DeliveryAddressesItemWidget(
+      {Key key,
+      this.address,
+      this.onPressed,
+      this.onLongPress,
+      this.onDismissed,
+      this.paymentMethod})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +55,10 @@ class DeliveryAddressesItemWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor.withOpacity(0.9),
           boxShadow: [
-            BoxShadow(color: Theme.of(context).focusColor.withOpacity(0.1), blurRadius: 5, offset: Offset(0, 2)),
+            BoxShadow(
+                color: Theme.of(context).focusColor.withOpacity(0.1),
+                blurRadius: 5,
+                offset: Offset(0, 2)),
           ],
         ),
         child: Row(
@@ -60,10 +72,14 @@ class DeliveryAddressesItemWidget extends StatelessWidget {
                   width: 60,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
-                      color:
-                          (address?.isDefault ?? false) || (paymentMethod?.selected ?? false) ? Theme.of(context).accentColor : Theme.of(context).focusColor),
+                      color: (address?.isDefault ?? false) ||
+                              (paymentMethod?.selected ?? false)
+                          ? Theme.of(context).accentColor
+                          : Theme.of(context).focusColor),
                   child: Icon(
-                    (paymentMethod?.selected ?? false) ? Icons.check : Icons.place,
+                    (paymentMethod?.selected ?? false)
+                        ? Icons.check
+                        : Icons.place,
                     color: Theme.of(context).primaryColor,
                     size: 38,
                   ),
@@ -91,7 +107,9 @@ class DeliveryAddressesItemWidget extends StatelessWidget {
                           address?.address ?? S.of(context).unknown,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
-                          style: address?.description != null ? Theme.of(context).textTheme.caption : Theme.of(context).textTheme.subtitle1,
+                          style: address?.description != null
+                              ? Theme.of(context).textTheme.caption
+                              : Theme.of(context).textTheme.subtitle1,
                         ),
                       ],
                     ),

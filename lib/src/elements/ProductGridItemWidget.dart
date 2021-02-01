@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:markets/src/controllers/product_controller.dart';
 import 'package:markets/src/helpers/helper.dart';
@@ -60,12 +62,16 @@ class _ProductGridItemWidgetState extends State<ProductGridItemWidget> {
                 style: Theme.of(context).textTheme.bodyText1,
                 overflow: TextOverflow.ellipsis,
               ),
-              SizedBox(height: 2),
               Text(
-                widget.product.market.name,
+                "${widget.product.capacity}${widget.product.unit}~${widget.product.market.name}",
                 style: Theme.of(context).textTheme.caption,
                 overflow: TextOverflow.ellipsis,
               ),
+              // Text(
+              //   widget.product.market.name,
+              //   style: Theme.of(context).textTheme.caption,
+              //   overflow: TextOverflow.ellipsis,
+              // ),
               Center(
                 child: widget.isAddedToCart
                     ? Container(
