@@ -50,7 +50,8 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userAddress = prefs.getString('locationName');
     Future.delayed(const Duration(seconds: 2), () {
-      if (_con.deliveryAddress.id != null || _con.deliveryAddress.id != 'null') {
+      if (_con.deliveryAddress.id != null ||
+          _con.deliveryAddress.id != 'null') {
         _con.toggleDelivery();
       }
     });
@@ -204,11 +205,20 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.headline4,
                     ),
-                    subtitle: Text(
-                      userAddress,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.caption,
+                    subtitle: TextFormField(
+                      onChanged: (s) async {
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        if(s.trim().toString().isNotEmpty){
+                          prefs.setString("derivery_information", s.toString());
+                        }
+                      },
+                      style: TextStyle(color: Theme.of(context).hintColor),
+                      keyboardType: TextInputType.text,
+                      decoration: getInputDecoration(
+                          hintText: 'Extra info', labelText: "Extra info"),
+                      validator: (input) => input.trim().length != 16
+                          ? S.of(context).not_a_valid_number
+                          : null,
                     ),
                   ),
                 ),
@@ -235,8 +245,9 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
                         title: Text('ASAP', style: TextStyle(fontSize: 12)),
                         value: SingingCharacter.ASAP,
                         groupValue: _character,
-                        onChanged: (SingingCharacter value) async{
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                        onChanged: (SingingCharacter value) async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
                           prefs.setString('delivery_schedule_id', "1");
                           setState(() {
                             _character = value;
@@ -271,10 +282,13 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
                                   itemCount: _con.schedules.length,
                                   itemBuilder: (context, index) {
                                     return GestureDetector(
-                                      onTap: () async{
+                                      onTap: () async {
                                         Navigator.of(context).pop();
-                                        SharedPreferences prefs = await SharedPreferences.getInstance();
-                                        prefs.setString('delivery_schedule_id', _con.schedules[index].id);
+                                        SharedPreferences prefs =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        prefs.setString('delivery_schedule_id',
+                                            _con.schedules[index].id);
                                         setState(() {
                                           chosenSchedules =
                                               _con.schedules[index].id;
@@ -334,6 +348,25 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
           ],
         ),
       ),
+    );
+  }
+
+  InputDecoration getInputDecoration({String hintText, String labelText}) {
+    return new InputDecoration(
+      hintText: hintText,
+      labelText: labelText,
+      hintStyle: Theme.of(context).textTheme.bodyText2.merge(
+            TextStyle(color: Theme.of(context).focusColor),
+          ),
+      enabledBorder: UnderlineInputBorder(
+          borderSide:
+              BorderSide(color: Theme.of(context).hintColor.withOpacity(0.2))),
+      focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Theme.of(context).hintColor)),
+      floatingLabelBehavior: FloatingLabelBehavior.auto,
+      labelStyle: Theme.of(context).textTheme.bodyText2.merge(
+            TextStyle(color: Theme.of(context).hintColor),
+          ),
     );
   }
 }
