@@ -215,7 +215,7 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
                       style: TextStyle(color: Theme.of(context).hintColor),
                       keyboardType: TextInputType.text,
                       decoration: getInputDecoration(
-                          hintText: 'Extra info', labelText: "Extra info"),
+                          hintText: 'Extra info  i.e house number x', labelText: "Extra info i.e house number x"),
                       validator: (input) => input.trim().length != 16
                           ? S.of(context).not_a_valid_number
                           : null,

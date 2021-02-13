@@ -42,7 +42,7 @@ class _HomeWidgetState extends StateMVC<HomeWidget> {
   @override
   void initState() {
     super.initState();
-    // _getLocationState();
+    _getLocationState();
     _locationScreenToShow();
   }
 

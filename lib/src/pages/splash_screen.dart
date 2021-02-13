@@ -23,14 +23,14 @@ class SplashScreenState extends StateMVC<SplashScreen> {
   void initState() {
     super.initState();
     loadData();
-    _getLocationState();
+    // _getLocationState();
   }
 
-  _getLocationState() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('locationState', false);
-    prefs.setString('delivery_schedule_id', "1");
-  }
+  // _getLocationState() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.setBool('locationState', false);
+  //   prefs.setString('delivery_schedule_id', "1");
+  // }
 
   void loadData() {
     _con.progress.addListener(() {
