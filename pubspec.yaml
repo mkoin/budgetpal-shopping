@@ -54,6 +54,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+dependency_overrides:
+  flutter_svg: ^0.19.3
+  intl: 0.17.0-nullsafety.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

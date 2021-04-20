@@ -49,6 +49,7 @@ class _EmptyCartWidgetState extends State<EmptyCartWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
+              SizedBox(height: 10),
               Stack(
                 children: <Widget>[
                   Container(
