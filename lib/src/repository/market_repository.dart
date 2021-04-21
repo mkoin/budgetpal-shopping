@@ -40,6 +40,30 @@ Future<Stream<Market>> getNearMarkets(Address myLocation, Address areaLocation) 
     return new Stream.value(new Market.fromJSON({}));
   }
 }
+Future<List<Market>> getMarkets() async {
+  Uri uri = Helper.getUri('api/markets');
+  Map<String, dynamic> _queryParams = {};
+  uri = uri.replace(queryParameters: _queryParams);
+  try {
+    final client = new http.Client();
+    final streamedRest = await client.send(http.Request('get', uri));
+
+    streamedRest.stream.transform(utf8.decoder).transform(json.decoder).map((
+        data) => Helper.getData(data)).expand((data) => (data as List)).map((
+        data) {
+
+          return (data);
+      // return streamedRest.stream.transform(utf8.decoder).transform(json.decoder).map((data) => Helper.getData(data)).expand((data) => (data as List)).map((data) {
+      //   return Market.fromJSON(data);
+      // });
+    });
+  }
+  catch (e) {
+    // print(CustomTrace(StackTrace.current, message: uri.toString()).toString());
+    // return new Stream.value(new Market.fromJSON({}));
+  }
+}
+
 
 Future<Stream<Market>> getPopularMarkets(Address myLocation) async {
   Uri uri = Helper.getUri('api/markets');
