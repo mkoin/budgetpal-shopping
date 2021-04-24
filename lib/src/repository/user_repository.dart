@@ -34,7 +34,7 @@ Future<User> login(User user) async {
 
 Future<User> register(User user) async {
   final String url =
-      '${GlobalConfiguration().getString('api_base_url')}register';
+      '${GlobalConfiguration().getString('api_base_url')}register_user';
   final client = new http.Client();
   final response = await client.post(
     url,

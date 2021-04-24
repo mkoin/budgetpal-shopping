@@ -13,7 +13,7 @@
     <application
         android:name=".Application"
         android:icon="@mipmap/ic_launcher"
-        android:label="BudgetPal Shopping">
+        android:label="Anstar Grocery">
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

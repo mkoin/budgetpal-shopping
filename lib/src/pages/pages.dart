@@ -106,7 +106,7 @@ class _PagesWidgetState extends State<PagesWidget> {
           unselectedFontSize: 0,
           iconSize: 22,
           elevation: 0,
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.black54,
           selectedIconTheme: IconThemeData(size: 28),
           unselectedItemColor: Theme.of(context).focusColor.withOpacity(1),
           currentIndex: widget.currentTab,

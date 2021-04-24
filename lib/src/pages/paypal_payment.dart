@@ -27,7 +27,7 @@ class _PayPalPaymentWidgetState extends StateMVC<PayPalPaymentWidget> {
       appBar: AppBar(
         bottom: PreferredSize(
             child: Container(
-              color: Colors.orange,
+              color: Colors.green,
               height: 1.0,
             ),
             preferredSize: Size.fromHeight(2.0)),

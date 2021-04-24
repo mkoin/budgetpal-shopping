@@ -273,6 +273,8 @@ class _SignUpWidgetState extends StateMVC<SignUpWidget> {
                             ),
                           ),
                           SizedBox(height: 30),
+
+
                           BlockButtonWidget(
                             text: Text(
                               S.of(context).register,

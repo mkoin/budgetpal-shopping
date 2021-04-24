@@ -52,7 +52,7 @@ class _LandingPageWidgetState extends StateMVC<LandingPageWidget> {
         appBar: AppBar(
           bottom: PreferredSize(
               child: Container(
-                color: Colors.orange,
+                color: Colors.green,
                 height: 1.0,
               ),
               preferredSize: Size.fromHeight(2.0)),
@@ -65,7 +65,7 @@ class _LandingPageWidgetState extends StateMVC<LandingPageWidget> {
             onPressed: () => widget.parentScaffoldKey.currentState.openDrawer(),
           ),
           title: Text(
-            S.of(context).cart,
+            "Anstar Grocery",
             style: Theme.of(context)
                 .textTheme
                 .headline6
