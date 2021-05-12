@@ -195,6 +195,8 @@ class Icons {
   /// <i class="material-icons-sharp md-36">access_alarm</i> &#x2014; material icon named "access alarm sharp".
   static const IconData access_alarm_sharp = IconData(0xe738, fontFamily: 'MaterialIcons');
 
+  static const IconData subscriptions12 = IconData(0xea3e, fontFamily: 'MaterialIcons');
+
   /// <i class="material-icons-round md-36">access_alarm</i> &#x2014; material icon named "access alarm rounded".
   static const IconData access_alarm_rounded = IconData(0xf517, fontFamily: 'MaterialIcons');
 
