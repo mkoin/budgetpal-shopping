@@ -11,6 +11,7 @@ import '../helpers/app_config.dart' as config;
 import '../models/address.dart';
 import '../repository/settings_repository.dart';
 
+
 class DeliveryAddressBottomSheetWidget extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
 
@@ -26,6 +27,10 @@ class _DeliveryAddressBottomSheetWidgetState
     extends StateMVC<DeliveryAddressBottomSheetWidget> {
   DeliveryAddressesController _con;
   final myController = TextEditingController();
+
+
+  // String finalAddress;
+  // Position _currentPosition;
 
   _DeliveryAddressBottomSheetWidgetState()
       : super(DeliveryAddressesController()) {
@@ -63,25 +68,29 @@ class _DeliveryAddressBottomSheetWidgetState
               children: <Widget>[
                 InkWell(
                   onTap: () async {
-                    _getLocationState();
-                    LocationResult result = await showLocationPicker(
+                     _getLocationState();
+
+                     LocationResult result = await showLocationPicker(
                       context,
                       setting.value.googleMapsKey,
-                      initialCenter: LatLng(
+                      initialCenter:LatLng(
                           deliveryAddress.value?.latitude ?? 0,
                           deliveryAddress.value?.longitude ?? 0),
-                      //automaticallyAnimateToCurrentLocation: true,
+                      automaticallyAnimateToCurrentLocation: true,
                       //mapStylePath: 'assets/mapStyle.json',
                       myLocationButtonEnabled: true,
-                      //resultCardAlignment: Alignment.bottomCenter,
+                      layersButtonEnabled: true,
+                      resultCardAlignment: Alignment.bottomCenter,
                     );
+                    print("*************RESULTS*************");
+                    print("HAPAPA $_con");
+
                     _con.addAddress(new Address.fromJSON({
                       'address': result.address,
                       'latitude': result.latLng.latitude,
                       'longitude': result.latLng.longitude,
                     }));
-                    print("result = $result");
-                    // Navigator.of(widget.scaffoldKey.currentContext).pop();
+
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -298,7 +307,7 @@ class _DeliveryAddressBottomSheetWidgetState
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        _con.addresses.elementAt(index).address,
+                                        _con.addresses.elementAt(index).address.toString(),
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 3,
                                         style: Theme.of(context)
@@ -347,4 +356,34 @@ class _DeliveryAddressBottomSheetWidgetState
       ),
     );
   }
+  // _getAddressFromLatLng() async {
+  //   try {
+  //     List<Placemark> placemarks = await placemarkFromCoordinates(
+  //         deliveryAddress.value.latitude,
+  //         deliveryAddress.value.longitude
+  //     );
+  //     Placemark place = placemarks[0];
+  //
+  //     setState(() {
+  //       finalAddress = "${place.locality}, ${place.postalCode}, ${place.country}";
+  //       print("************final address**************");
+  //       print(finalAddress);
+  //     });
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+  //
+  // _getCurrentLocation() {
+  //   Geolocator
+  //       .getCurrentPosition(desiredAccuracy: LocationAccuracy.best, forceAndroidLocationManager: true)
+  //       .then((Position position) {
+  //     setState(() {
+  //       _currentPosition = position;
+  //       _getAddressFromLatLng();
+  //     });
+  //   }).catchError((e) {
+  //     print(e);
+  //   });
+  // }
 }

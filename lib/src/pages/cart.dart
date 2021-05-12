@@ -134,7 +134,8 @@ class _CartWidgetState extends StateMVC<CartWidget> {
                             separatorBuilder: (context, index) {
                               return SizedBox(height: 15);
                             },
-                            itemBuilder: (context, index) {
+                            itemBuilder: (context, index)
+                            {
                               return CartItemWidget(
                                 cart: _con.carts.elementAt(index),
                                 heroTag: 'cart',

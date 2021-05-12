@@ -30,6 +30,10 @@ Future<Setting> initSettings() async {
   try {
     final response = await http.get(
         url, headers: {HttpHeaders.contentTypeHeader: 'application/json'});
+    print("**********SETTINGS************");
+    print(response.body);
+
+
     if (response.statusCode == 200 &&
         response.headers.containsValue('application/json')) {
       if (json.decode(response.body)['data'] != null) {
@@ -66,6 +70,8 @@ Future<dynamic> setCurrentLocation() async {
       String _addressName = await mapsUtil.getAddressName(
           new LatLng(_locationData?.latitude, _locationData?.longitude),
           setting.value.googleMapsKey);
+
+
       _address = Address.fromJSON({
         'address': _addressName,
         'latitude': _locationData?.latitude,

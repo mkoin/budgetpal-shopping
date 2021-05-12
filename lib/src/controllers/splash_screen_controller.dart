@@ -41,6 +41,7 @@ class SplashScreenController extends ControllerMVC {
       }
     });
     Timer(Duration(seconds: 20), () {
+      // ignore: deprecated_member_use
       scaffoldKey?.currentState?.showSnackBar(SnackBar(
         content: Text(S.of(context).verify_your_internet_connection),
       ));

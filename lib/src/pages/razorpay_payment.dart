@@ -50,7 +50,7 @@ class _RazorPayPaymentWidgetState extends StateMVC<RazorPayPaymentWidget> {
             initialHeaders: {},
             initialOptions: new InAppWebViewWidgetOptions(androidInAppWebViewOptions: AndroidInAppWebViewOptions(textZoom: 120)),
             onWebViewCreated: (InAppWebViewController controller) {
-              _con.webView = controller;
+            _con.webView=controller;
             },
             onLoadStart: (InAppWebViewController controller, String url) {
               setState(() {

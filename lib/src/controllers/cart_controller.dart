@@ -26,6 +26,7 @@ class CartController extends ControllerMVC {
   void listenForCarts({String message}) async {
     carts.clear();
     final Stream<Cart> stream = await getCart();
+
     stream.listen((Cart _cart) {
       if (!carts.contains(_cart)) {
         setState(() {
